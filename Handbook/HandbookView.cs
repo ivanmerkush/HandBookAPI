@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Models;
 using Controllers;
 
@@ -12,23 +10,24 @@ namespace Views
     public abstract class HandbookView
     {
         private readonly Users users;
-        private BookController Controller { get; }
+        private readonly BookController Controller;
 
         protected HandbookView()
         {
             users = new Users();
             Controller = new BookController();
         }
+        protected List<UserInfo> GetUsers() => Controller.GetUsers(users);
 
         protected UserInfo GetUserByName(string name) => Controller.GetUser(users, name, Parameter.Name);
 
-        protected void GetUserBySurname(string surname) => Controller.GetUser(users, surname, Parameter.Surname);
+        protected UserInfo GetUserBySurname(string surname) => Controller.GetUser(users, surname, Parameter.Surname);
         
-        protected void AddUser(string name, string surname, string phone) => Controller.AddUser(users, name, surname, phone);
+        protected bool AddUser(string name, string surname, string phone) => Controller.AddUser(users, name, surname, phone);
 
-        protected void EditUser(string oldValue, string newValue, Parameter parameter) => Controller.EditUser(users, oldValue, newValue, parameter);
+        protected bool EditUser(string oldValue, string newValue, Parameter parameter) => Controller.EditUser(users, oldValue, newValue, parameter);
 
-        protected void DeleteUser(string name, string surname) => Controller.DeleteUser(users, name, surname);
+        protected bool DeleteUser(string name, string surname) => Controller.DeleteUser(users, name, surname);
 
         protected void LoadDB() => Controller.LoadDB(users);
 

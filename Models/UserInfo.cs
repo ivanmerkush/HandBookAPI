@@ -9,9 +9,9 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
-        internal string Name { get; set; }
-        internal string Surname { get; set; }
-        internal string Phone { get; set; }
+        internal string Name { get; private set; }
+        internal string Surname { get; private set; }
+        internal string Phone { get; private set; }
         
         internal UserInfo(string name, string surname, string phone)
         {
@@ -54,8 +54,8 @@ namespace Models
             }
         }
 
-        public override int GetHashCode() => Name.GetHashCode() + Surname.GetHashCode() + Phone.GetHashCode();
+        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode() + 23 * Phone.GetHashCode();
 
-        public override string ToString() => Name + " " + Surname + " " + Phone;
+        public override string ToString() => string.Join(" ",  Name, Surname, Phone);
     }
 }

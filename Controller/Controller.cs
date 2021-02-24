@@ -1,6 +1,5 @@
-﻿using System;
-using Models;
-
+﻿using Models;
+using System.Collections.Generic;
 
 namespace Controllers
 {
@@ -9,6 +8,8 @@ namespace Controllers
     /// </summary>
     public class BookController
     {
+        public List<UserInfo> GetUsers(Users users) => users.GetUsers();
+
         public UserInfo GetUser(Users users, string value, Parameter parameter) => users.GetUser(value, parameter);
 
         public bool AddUser(Users users, string name, string surname, string phone)
@@ -21,13 +22,15 @@ namespace Controllers
             return true;
         }
 
-        public void EditUser(Users users,string oldValue, string newValue, Parameter parameter)
+        public bool EditUser(Users users,string oldValue, string newValue, Parameter parameter)
         {
             UserInfo user = users.GetUser(oldValue, parameter);
             if(user != null)
             {
                 user.ChangeValue(newValue, parameter);
+                return true;
             }
+            return false;
         }
 
         public bool DeleteUser(Users users, string name, string surname)

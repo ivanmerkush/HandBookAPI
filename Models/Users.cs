@@ -10,11 +10,22 @@ namespace Models
     /// </summary>
     public class Users
     {
-        public List<UserInfo> UserList { get; }
+        private List<UserInfo> UserList { get; }
         
         public Users()
         {
             UserList = new List<UserInfo>();
+        }
+
+        /// <summary>
+        /// Gets copy of user's list
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public List<UserInfo> GetUsers()
+        {
+            return new List<UserInfo>(UserList);
         }
 
         /// <summary>
