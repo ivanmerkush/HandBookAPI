@@ -6,6 +6,9 @@ using Controllers;
 
 namespace Views
 {
+    /// <summary>
+    /// Containts standart methods to work with list of users
+    /// </summary>
     public abstract class HandbookView
     {
         private readonly Users users;
@@ -31,8 +34,22 @@ namespace Views
 
         protected void SaveDB() => Controller.SaveDB(users);
 
+        /// <summary>
+        /// Reads text from some source
+        /// </summary>
+        /// <returns></returns>
         public abstract string Read();
+        
+        /// <summary>
+        /// Prints user
+        /// </summary>
+        /// <param name="userInfo"></param>
         public abstract void PrintUser(UserInfo userInfo);
+
+        /// <summary>
+        /// Prints text 
+        /// </summary>
+        /// <param name="text"></param>
         public abstract void Print(string text);
     }
 }

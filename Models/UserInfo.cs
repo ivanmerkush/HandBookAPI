@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Models
 {
+    /// <summary>
+    /// Represents simple information about user: name and phone
+    /// </summary>
     public class UserInfo
     {
         internal string Name { get; set; }
@@ -30,6 +33,11 @@ namespace Models
                    Phone.Equals(userInfo.Phone);
         }
 
+        /// <summary>
+        /// Changes one of attributes depending on parameter value
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <param name="parameter"></param>
         public void ChangeValue(string newValue, Parameter parameter)
         {
             switch(parameter)

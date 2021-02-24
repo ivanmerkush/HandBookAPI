@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Models
 {
+    /// <summary>
+    /// Containts list of user's info and implements methods to work with it
+    /// </summary>
     public class Users
     {
         public List<UserInfo> UserList { get; }
@@ -14,6 +17,12 @@ namespace Models
             UserList = new List<UserInfo>();
         }
 
+        /// <summary>
+        /// Finds user using value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public UserInfo GetUser(string value, Parameter parameter)
         {
             switch(parameter)
@@ -29,14 +38,31 @@ namespace Models
             }
         }
 
+        /// <summary>
+        /// Checks if this user exists in list
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <returns></returns>
         public bool Exists(string name, string surname)
         {
             return UserList.Exists(user => user.Name.Equals(name) && 
                                            user.Surname.Equals(surname));
         }
 
+        /// <summary>
+        /// Checks if user with this phone exists
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
         public bool Exists(string phone) => UserList.Exists(user => user.Phone.Equals(phone));
 
+        /// <summary>
+        /// Edits information about some user
+        /// </summary>
+        /// <param name="userInfo"></param>
+        /// <param name="newValue"></param>
+        /// <param name="parameter"></param>
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
             if(UserList.Contains(userInfo))
@@ -53,13 +79,27 @@ namespace Models
             
         }
 
+        /// <summary>
+        /// Adds user to the list, if there are no duplicates
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="phone"></param>
         public void AddUserInfo(string name, string surname, string phone) => UserList.Add(new UserInfo(name, surname, phone));
 
+        /// <summary>
+        /// Deletes user, if it exists
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
         public void DeleteUser(string name, string surname)
         {
             UserList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
         }
 
+        /// <summary>
+        /// Loads Users from file
+        /// </summary>
         public void LoadUsers()
         {
             try
@@ -81,6 +121,9 @@ namespace Models
             
         }
 
+        /// <summary>
+        /// Saves users to file
+        /// </summary>
         public void SaveUsers()
         {
             try

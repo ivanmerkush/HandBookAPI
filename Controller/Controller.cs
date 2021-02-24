@@ -4,6 +4,9 @@ using Models;
 
 namespace Controllers
 {
+    /// <summary>
+    /// Allows to review and edit list of users infromtaion
+    /// </summary>
     public class BookController
     {
         public UserInfo GetUser(Users users, string value, Parameter parameter) => users.GetUser(value, parameter);
