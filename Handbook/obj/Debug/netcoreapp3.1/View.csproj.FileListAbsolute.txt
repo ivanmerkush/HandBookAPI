@@ -1,9 +1,0 @@
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\bin\Debug\netcoreapp3.1\View.deps.json
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\bin\Debug\netcoreapp3.1\View.dll
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\bin\Debug\netcoreapp3.1\View.pdb
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.csprojAssemblyReference.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.AssemblyInfoInputs.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.AssemblyInfo.cs
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.csproj.CoreCompileInputs.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.dll
-C:\Users\Ivan\source\repos\HandBookAPI\Handbook\obj\Debug\netcoreapp3.1\View.pdb
