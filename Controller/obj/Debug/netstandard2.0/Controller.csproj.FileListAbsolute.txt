@@ -1,9 +1,0 @@
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controller.deps.json
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controller.dll
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controller.pdb
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.csprojAssemblyReference.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.AssemblyInfoInputs.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.AssemblyInfo.cs
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.csproj.CoreCompileInputs.cache
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.dll
-C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controller.pdb
