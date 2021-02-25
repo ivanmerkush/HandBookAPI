@@ -29,24 +29,14 @@ namespace Models
         }
 
         /// <summary>
-        /// Finds user using value
+        /// Finds user with proper name and surname
         /// </summary>
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public UserInfo GetUser(string value, Parameter parameter)
+        public UserInfo GetUser(string name, string surname)
         {
-            switch(parameter)
-            {
-                case Parameter.Name:
-                    return UserList.Find(user => user.Name.Equals(value));
-                case Parameter.Surname:
-                    return UserList.Find(user => user.Surname.Equals(value));
-                case Parameter.Phone:
-                    return UserList.Find(user => user.Phone.Equals(value));
-                default:
-                    return null;
-            }
+            return UserList.Find(user => user.Name.Equals(name) && user.Surname.Equals(surname));
         }
 
         /// <summary>

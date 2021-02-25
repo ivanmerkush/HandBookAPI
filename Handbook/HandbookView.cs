@@ -19,13 +19,11 @@ namespace Views
         }
         protected List<UserInfo> GetUsers() => Controller.GetUsers(users);
 
-        protected UserInfo GetUserByName(string name) => Controller.GetUser(users, name, Parameter.Name);
+        protected UserInfo GetUserByNameAndSurname(string name, string surname) => Controller.GetUser(users, name, surname);
 
-        protected UserInfo GetUserBySurname(string surname) => Controller.GetUser(users, surname, Parameter.Surname);
-        
         protected bool AddUser(string name, string surname, string phone) => Controller.AddUser(users, name, surname, phone);
 
-        protected bool EditUser(string oldValue, string newValue, Parameter parameter) => Controller.EditUser(users, oldValue, newValue, parameter);
+        protected bool EditUser(string name, string surname, string newValue, Parameter parameter) => Controller.EditUser(users, name, surname, newValue, parameter);
 
         protected bool DeleteUser(string name, string surname) => Controller.DeleteUser(users, name, surname);
 

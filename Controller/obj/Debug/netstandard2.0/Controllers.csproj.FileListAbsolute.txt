@@ -1,0 +1,12 @@
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controllers.deps.json
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controllers.dll
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Controllers.pdb
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Models.dll
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\bin\Debug\netstandard2.0\Models.pdb
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.csprojAssemblyReference.cache
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.AssemblyInfoInputs.cache
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.AssemblyInfo.cs
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.csproj.CoreCompileInputs.cache
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.csproj.CopyComplete
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.dll
+C:\Users\Ivan\source\repos\HandBookAPI\Controller\obj\Debug\netstandard2.0\Controllers.pdb

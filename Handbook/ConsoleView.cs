@@ -23,34 +23,29 @@ namespace Views
                         }
                         break;
                     case 2:
-                        Print("Write name of user:");
-                        string name = Read();
-                        UserInfo userInfo = GetUserByName(name);
-                        if(userInfo == null)
+                        Print("Write name and surname of user:");
+                        string[] values = Read().Split(' ');
+                        if (values.Length != 2)
                         {
-                            Print("User with name " + name + " not found");
+                            Print("Wrong amount of arguments.");
                         }
                         else
                         {
-                            PrintUser(userInfo);
+                            UserInfo userInfo = GetUserByNameAndSurname(values[0], values[1]);
+                            if (userInfo == null)
+                            {
+                                Print("User with name " + values[0] + " and surname " + values[1] + " not found");
+                            }
+                            else
+                            {
+                                PrintUser(userInfo);
+                            }
+                            
                         }
                         break;
                     case 3:
-                        Print("Write surname of user:");
-                        string surname = Read();
-                        userInfo = GetUserBySurname(surname);
-                        if (userInfo == null)
-                        {
-                            Print("User with surname " + surname + " not found");
-                        }
-                        else
-                        {
-                            PrintUser(userInfo);
-                        }
-                        break;
-                    case 4:
                         Print("Write name surname and phone of new user:");
-                        string[] values = Read().Split(' ');
+                        values = Read().Split(' ');
                         if(values.Length != 3)
                         {
                             Print("Wrong amount of arguments.");
@@ -67,19 +62,21 @@ namespace Views
                             }
                         }
                         break;
-                    case 5:
+                    case 4:
                         Print("Write which parameter you want to change:");
                         if(Enum.TryParse(Read(), out Parameter parameter))
                         {
-                            Print("Write old and new value of this parameter:"); ;
+                            Print("Write name and surname of user");
                             values = Read().Split(' ');
+                            Print("Write new value for this user");
+                            string newValue = Read();
                             if (values.Length != 2)
                             {
                                 Print("Wrong amount of arguments.");
                             }
                             else
                             {
-                                if(EditUser(values[0], values[1], parameter))
+                                if(EditUser(values[0], values[1], newValue, parameter))
                                 {
                                     Print("User was edited.");
                                 }
@@ -90,7 +87,7 @@ namespace Views
                             Print("There are no such parameter;");
                         }
                         break;
-                    case 6:
+                    case 5:
                         Print("Write name and surname of prey:");
                         values = Read().Split(' ');
                         if (values.Length != 2)
@@ -109,15 +106,15 @@ namespace Views
                             }
                         }
                         break;
-                    case 7:
+                    case 6:
                         Print("Loading Users from file;");
                         LoadDB();
                         break;
-                    case 8:
+                    case 7:
                         Print("Saving User to file");
                         SaveDB();
                         break;
-                    case 9:
+                    case 8:
                         return;
                     default:
                         Print("Wrong request format/number. Try again.");
@@ -137,14 +134,13 @@ namespace Views
             Console.WriteLine("======================================\n" +
                 "Available actions:" +
                 "\n1)Get Users; " +
-                "\n2)Get User information by name; " +
-                "\n3)Get User information by surname; " +
-                "\n4)Add User; " +
-                "\n5)Edit User; " +
-                "\n6)Delete user; " +
-                "\n7)Load Users;" +
-                "\n8)Save Users;" +
-                "\n9)Exit;");
+                "\n2)Get User information by name and surname; " +
+                "\n3)Add User; " +
+                "\n4)Edit User; " +
+                "\n5)Delete user; " +
+                "\n6)Load Users;" +
+                "\n7)Save Users;" +
+                "\n8)Exit;");
         }
     }
 }
