@@ -12,7 +12,7 @@ namespace Models
         internal string Name { get; private set; }
         internal string Surname { get; private set; }
         internal string Phone { get; private set; }
-        
+
         internal UserInfo(string name, string surname, string phone)
         {
             Name = name;
@@ -24,13 +24,12 @@ namespace Models
 
         public bool Equals(UserInfo userInfo)
         {
-            if(userInfo == null)
+            if (userInfo == null)
             {
                 return false;
             }
-            return Name.Equals(userInfo.Name) && 
-                   Surname.Equals(userInfo.Surname) && 
-                   Phone.Equals(userInfo.Phone);
+            return Name.Equals(userInfo.Name) &&
+                   Surname.Equals(userInfo.Surname);
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace Models
         /// <param name="parameter"></param>
         public void ChangeValue(string newValue, Parameter parameter)
         {
-            switch(parameter)
+            switch (parameter)
             {
                 case Parameter.Name:
                     Name = newValue;
@@ -54,8 +53,8 @@ namespace Models
             }
         }
 
-        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode() + 23 * Phone.GetHashCode();
+        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode();
 
-        public override string ToString() => string.Join(" ",  Name, Surname, Phone);
+        public override string ToString() => string.Join(" ", Name, Surname, Phone);
     }
 }

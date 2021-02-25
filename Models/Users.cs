@@ -11,7 +11,7 @@ namespace Models
     public class Users
     {
         private List<UserInfo> UserList { get; }
-        
+
         public Users()
         {
             UserList = new List<UserInfo>();
@@ -29,24 +29,14 @@ namespace Models
         }
 
         /// <summary>
-        /// Finds user using value
+        /// Finds user with proper name and surname
         /// </summary>
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public UserInfo GetUser(string value, Parameter parameter)
+        public UserInfo GetUser(string name, string surname)
         {
-            switch(parameter)
-            {
-                case Parameter.Name:
-                    return UserList.Find(user => user.Name.Equals(value));
-                case Parameter.Surname:
-                    return UserList.Find(user => user.Surname.Equals(value));
-                case Parameter.Phone:
-                    return UserList.Find(user => user.Phone.Equals(value));
-                default:
-                    return null;
-            }
+            return UserList.Find(user => user.Name.Equals(name) && user.Surname.Equals(surname));
         }
 
         /// <summary>
@@ -57,7 +47,7 @@ namespace Models
         /// <returns></returns>
         public bool Exists(string name, string surname)
         {
-            return UserList.Exists(user => user.Name.Equals(name) && 
+            return UserList.Exists(user => user.Name.Equals(name) &&
                                            user.Surname.Equals(surname));
         }
 
@@ -76,7 +66,7 @@ namespace Models
         /// <param name="parameter"></param>
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
-            if(UserList.Contains(userInfo))
+            if (UserList.Contains(userInfo))
             {
                 foreach (UserInfo user in UserList)
                 {
@@ -87,7 +77,7 @@ namespace Models
                     }
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -129,7 +119,7 @@ namespace Models
             {
 
             }
-            
+
         }
 
         /// <summary>
@@ -140,18 +130,18 @@ namespace Models
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                foreach(UserInfo userInfo in UserList)
+                foreach (UserInfo userInfo in UserList)
                 {
                     stringBuilder.Append(userInfo.ToString()).Append("\n");
                 }
                 string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
                 File.WriteAllText(path, stringBuilder.ToString());
             }
-            catch(IOException)
+            catch (IOException)
             {
 
             }
-            
+
         }
     }
 
