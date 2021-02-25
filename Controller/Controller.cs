@@ -10,16 +10,8 @@ namespace Controllers
     {
         public List<UserInfo> GetUsers(Users users) => users.GetUsers();
 
-        public UserInfo GetUser(Users users, string name, string surname) => users.GetUser(name, surname);
+        public UserInfo GetUser(Users users, string value, Parameter parameter) => users.GetUser(value, parameter);
 
-        /// <summary>
-        /// Adds new user with values of name surname and phone
-        /// </summary>
-        /// <param name="users"></param>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <param name="phone"></param>
-        /// <returns></returns>
         public bool AddUser(Users users, string name, string surname, string phone)
         {
             if(users.Exists(name, surname) || users.Exists(phone))
@@ -30,9 +22,9 @@ namespace Controllers
             return true;
         }
 
-        public bool EditUser(Users users,string name, string surname, string newValue, Parameter parameter)
+        public bool EditUser(Users users,string oldValue, string newValue, Parameter parameter)
         {
-            UserInfo user = users.GetUser(name, surname);
+            UserInfo user = users.GetUser(oldValue, parameter);
             if(user != null)
             {
                 user.ChangeValue(newValue, parameter);

@@ -29,7 +29,8 @@ namespace Models
                 return false;
             }
             return Name.Equals(userInfo.Name) && 
-                   Surname.Equals(userInfo.Surname);
+                   Surname.Equals(userInfo.Surname) && 
+                   Phone.Equals(userInfo.Phone);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Models
             }
         }
 
-        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode();
+        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode() + 23 * Phone.GetHashCode();
 
         public override string ToString() => string.Join(" ",  Name, Surname, Phone);
     }
