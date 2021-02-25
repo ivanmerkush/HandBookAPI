@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models;
 using Controllers;
 
@@ -16,6 +17,7 @@ namespace Views
         {
             users = new Users();
             Controller = new BookController();
+            users.EventOnChanged += ChangeHandler;
         }
         protected List<UserInfo> GetUsers() => Controller.GetUsers(users);
 
@@ -30,6 +32,20 @@ namespace Views
         protected void LoadDB() => Controller.LoadDB(users);
 
         protected void SaveDB() => Controller.SaveDB(users);
+
+
+        public void ChangeHandler(object source, EventArgs eventArgs)
+        {
+            Print("UserList was changed.");
+            Users copy = source as Users;
+            if (copy != null)
+            {
+                foreach (UserInfo user in copy.GetUsers())
+                {
+                    PrintUser(user);
+                }
+            }
+        }
 
         /// <summary>
         /// Reads text from some source

@@ -52,11 +52,7 @@ namespace Views
                         }
                         else
                         {
-                            if (AddUser(values[0], values[1], values[2]))
-                            {
-                                Print("New user was added.");
-                            }
-                            else
+                            if (!AddUser(values[0], values[1], values[2]))
                             {
                                 Print("User already exists.");
                             }
@@ -76,9 +72,9 @@ namespace Views
                             }
                             else
                             {
-                                if (EditUser(values[0], values[1], newValue, parameter))
+                                if (!EditUser(values[0], values[1], newValue, parameter))
                                 {
-                                    Print("User was edited.");
+                                    Print("User not found.");
                                 }
                             }
                         }
@@ -96,11 +92,7 @@ namespace Views
                         }
                         else
                         {
-                            if (DeleteUser(values[0], values[1]))
-                            {
-                                Print("User was deleted");
-                            }
-                            else
+                            if (!DeleteUser(values[0], values[1]))
                             {
                                 Print("There is no such user");
                             }

@@ -32,10 +32,11 @@ namespace Controllers
 
         public bool EditUser(Users users, string name, string surname, string newValue, Parameter parameter)
         {
+
             UserInfo user = users.GetUser(name, surname);
             if (user != null)
             {
-                user.ChangeValue(newValue, parameter);
+                users.EditInfo(user, newValue, parameter);
                 return true;
             }
             return false;

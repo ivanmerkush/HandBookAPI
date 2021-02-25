@@ -10,6 +10,8 @@ namespace Models
     /// </summary>
     public class Users
     {
+        public event EventHandler EventOnChanged;
+
         private List<UserInfo> UserList { get; }
 
         public Users()
@@ -66,18 +68,8 @@ namespace Models
         /// <param name="parameter"></param>
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
-            if (UserList.Contains(userInfo))
-            {
-                foreach (UserInfo user in UserList)
-                {
-                    if (user.Equals(userInfo))
-                    {
-                        user.ChangeValue(newValue, parameter);
-                        break;
-                    }
-                }
-            }
-
+            userInfo.ChangeValue(newValue, parameter);
+            EventOnChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -86,7 +78,11 @@ namespace Models
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <param name="phone"></param>
-        public void AddUserInfo(string name, string surname, string phone) => UserList.Add(new UserInfo(name, surname, phone));
+        public void AddUserInfo(string name, string surname, string phone)
+        {
+            UserList.Add(new UserInfo(name, surname, phone));
+            EventOnChanged(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Deletes user, if it exists
@@ -96,6 +92,7 @@ namespace Models
         public void DeleteUser(string name, string surname)
         {
             UserList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
+            EventOnChanged(this, EventArgs.Empty);
         }
 
         /// <summary>

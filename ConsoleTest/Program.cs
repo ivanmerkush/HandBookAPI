@@ -9,6 +9,7 @@ namespace ConsoleTest
         {
             ConsoleView view = new ConsoleView();
             view.Start();
+            
         }
     }
 }
