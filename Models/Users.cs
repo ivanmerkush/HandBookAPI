@@ -10,9 +10,9 @@ namespace Models
     /// </summary>
     public class Users
     {
-        public event EventHandler EventOnChanged;
+        public event EventHandler Changed;
 
-        private List<UserInfo> UserList { get; }
+        private List<UserInfo> UserList;
 
         public Users()
         {
@@ -25,9 +25,9 @@ namespace Models
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public List<UserInfo> GetUsers()
+        public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            return new List<UserInfo>(UserList);
+            return UserList;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Models
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
             userInfo.ChangeValue(newValue, parameter);
-            EventOnChanged(this, EventArgs.Empty);
+            Changed(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Models
         public void AddUserInfo(string name, string surname, string phone)
         {
             UserList.Add(new UserInfo(name, surname, phone));
-            EventOnChanged(this, EventArgs.Empty);
+            Changed(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Models
         public void DeleteUser(string name, string surname)
         {
             UserList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
-            EventOnChanged(this, EventArgs.Empty);
+            Changed(this, EventArgs.Empty);
         }
 
         /// <summary>

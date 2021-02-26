@@ -8,9 +8,17 @@ namespace Controllers
     /// </summary>
     public class BookController
     {
-        public List<UserInfo> GetUsers(Users users) => users.GetUsers();
 
-        public UserInfo GetUser(Users users, string name, string surname) => users.GetUser(name, surname);
+        private readonly Users users;
+
+        public BookController()
+        {
+            users = new Users();
+        }
+
+        public IReadOnlyCollection<UserInfo> GetUsers() => users.GetUsers();
+
+        public UserInfo GetUser(string name, string surname) => users.GetUser(name, surname);
 
         /// <summary>
         /// Adds new user with values of name surname and phone
@@ -20,7 +28,7 @@ namespace Controllers
         /// <param name="surname"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public bool AddUser(Users users, string name, string surname, string phone)
+        public bool AddUser(string name, string surname, string phone)
         {
             if (users.Exists(name, surname) || users.Exists(phone))
             {
@@ -30,7 +38,7 @@ namespace Controllers
             return true;
         }
 
-        public bool EditUser(Users users, string name, string surname, string newValue, Parameter parameter)
+        public bool EditUser(string name, string surname, string newValue, Parameter parameter)
         {
 
             UserInfo user = users.GetUser(name, surname);
@@ -42,7 +50,7 @@ namespace Controllers
             return false;
         }
 
-        public bool DeleteUser(Users users, string name, string surname)
+        public bool DeleteUser(string name, string surname)
         {
             if (users.Exists(name, surname))
             {
@@ -51,8 +59,8 @@ namespace Controllers
             }
             return false;
         }
-        public void LoadDB(Users users) => users.LoadUsers();
+        public void LoadDB() => users.LoadUsers();
 
-        public void SaveDB(Users users) => users.SaveUsers();
+        public void SaveDB() => users.SaveUsers();
     }
 }

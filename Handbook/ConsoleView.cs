@@ -16,7 +16,7 @@ namespace Views
                 switch (choice)
                 {
                     case 1:
-                        List<UserInfo> list = GetUsers();
+                        IReadOnlyCollection<UserInfo> list = GetUsers();
                         foreach (UserInfo user in list)
                         {
                             PrintUser(user);
