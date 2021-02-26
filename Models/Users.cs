@@ -10,13 +10,13 @@ namespace Models
     /// </summary>
     public class Users
     {
-        public event EventHandler Changed;
+        public event EventHandler<UserEventArgs> Changed;
 
-        private List<UserInfo> UserList;
+        private List<UserInfo> userList;
 
         public Users()
         {
-            UserList = new List<UserInfo>();
+            userList = new List<UserInfo>();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Models
         /// <returns></returns>
         public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            return UserList;
+            return userList;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Models
         /// <returns></returns>
         public UserInfo GetUser(string name, string surname)
         {
-            return UserList.Find(user => user.Name.Equals(name) && user.Surname.Equals(surname));
+            return userList.Find(user => user.Name.Equals(name) && user.Surname.Equals(surname));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Models
         /// <returns></returns>
         public bool Exists(string name, string surname)
         {
-            return UserList.Exists(user => user.Name.Equals(name) &&
+            return userList.Exists(user => user.Name.Equals(name) &&
                                            user.Surname.Equals(surname));
         }
 
@@ -58,7 +58,7 @@ namespace Models
         /// </summary>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public bool Exists(string phone) => UserList.Exists(user => user.Phone.Equals(phone));
+        public bool Exists(string phone) => userList.Exists(user => user.Phone.Equals(phone));
 
         /// <summary>
         /// Edits information about some user
@@ -68,8 +68,9 @@ namespace Models
         /// <param name="parameter"></param>
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
-            userInfo.ChangeValue(newValue, parameter);
-            Changed(this, EventArgs.Empty);
+            
+            UserInfo edited = userInfo.ChangeValue(newValue, parameter);
+            Changed(this, new UserEventArgs(edited, "User was edited."));
         }
 
         /// <summary>
@@ -80,8 +81,9 @@ namespace Models
         /// <param name="phone"></param>
         public void AddUserInfo(string name, string surname, string phone)
         {
-            UserList.Add(new UserInfo(name, surname, phone));
-            Changed(this, EventArgs.Empty);
+            UserInfo userInfo = new UserInfo(name, surname, phone);
+            userList.Add(userInfo);
+            Changed(this, new UserEventArgs(userInfo, "New user's infromation was added to list."));
         }
 
         /// <summary>
@@ -91,8 +93,7 @@ namespace Models
         /// <param name="surname"></param>
         public void DeleteUser(string name, string surname)
         {
-            UserList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
-            Changed(this, EventArgs.Empty);
+            userList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
         }
 
         /// <summary>
@@ -102,14 +103,14 @@ namespace Models
         {
             try
             {
-                UserList.Clear();
+                userList.Clear();
                 string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
                 string text = File.ReadAllText(path);
                 string[] lines = text.Split('\n');
                 for (int i = 0; i < lines.Length - 1; i++)
                 {
                     string[] parameters = lines[i].Split(' ');
-                    UserList.Add(new UserInfo(parameters[0], parameters[1], parameters[2]));
+                    userList.Add(new UserInfo(parameters[0], parameters[1], parameters[2]));
                 }
             }
             catch (IOException)
@@ -127,7 +128,7 @@ namespace Models
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                foreach (UserInfo userInfo in UserList)
+                foreach (UserInfo userInfo in userList)
                 {
                     stringBuilder.Append(userInfo.ToString()).Append("\n");
                 }

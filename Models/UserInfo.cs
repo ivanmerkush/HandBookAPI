@@ -37,7 +37,7 @@ namespace Models
         /// </summary>
         /// <param name="newValue"></param>
         /// <param name="parameter"></param>
-        public void ChangeValue(string newValue, Parameter parameter)
+        public UserInfo ChangeValue(string newValue, Parameter parameter)
         {
             switch (parameter)
             {
@@ -51,6 +51,7 @@ namespace Models
                     Phone = newValue;
                     break;
             }
+            return this;
         }
 
         public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode();
