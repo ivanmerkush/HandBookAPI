@@ -64,7 +64,7 @@ namespace Models
         /// <param name="userInfo"></param>
         /// <param name="newValue"></param>
         /// <param name="parameter"></param>
-        public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
+        public void EditInfo(UserInfo userInfo, string newValue, Parameters parameter)
         {
 
             UserInfo edited = userInfo.ChangeValue(newValue, parameter);
@@ -140,7 +140,7 @@ namespace Models
         }
     }
 
-    public enum Parameter
+    public enum Parameters
     {
         Name, Surname, Phone
     };

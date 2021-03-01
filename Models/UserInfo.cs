@@ -34,17 +34,17 @@ namespace Models
         /// </summary>
         /// <param name="newValue"></param>
         /// <param name="parameter"></param>
-        public UserInfo ChangeValue(string newValue, Parameter parameter)
+        public UserInfo ChangeValue(string newValue, Parameters parameter)
         {
             switch (parameter)
             {
-                case Parameter.Name:
+                case Parameters.Name:
                     Name = newValue;
                     break;
-                case Parameter.Surname:
+                case Parameters.Surname:
                     Surname = newValue;
                     break;
-                case Parameter.Phone:
+                case Parameters.Phone:
                     Phone = newValue;
                     break;
             }

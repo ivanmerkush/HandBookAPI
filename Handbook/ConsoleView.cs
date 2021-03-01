@@ -87,7 +87,7 @@ namespace Views
         public void EditUser()
         {
             Console.WriteLine("Enter parameter you want to be edited");
-            if(!Enum.TryParse(Console.ReadLine(), out Parameter parameter))
+            if(!Enum.TryParse(Console.ReadLine(), out Parameters parameter))
             {
                 Console.WriteLine("There are no this parameter");
             }
@@ -143,9 +143,35 @@ namespace Views
             controller.SaveDB();
         }
 
-        private void OnEndingRequest(object sender, RequestEventArgs args)
+        private void OnEndingRequest(object sender, ActionEventArgs args)
         {
-            Console.WriteLine(args.message);
+            switch(args.action)
+            {
+                case Actions.Check:
+                    Console.WriteLine("This user doesn't exist");
+                    break;
+                case Actions.GetAll:
+                    Console.WriteLine("All users from list");
+                    break;
+                case Actions.Get:
+                    Console.WriteLine("Here is user's info");
+                    break;
+                case Actions.Add:
+                    Console.WriteLine("A new user was added");
+                    break;
+                case Actions.Edit:
+                    Console.WriteLine("A user was edited");
+                    break;
+                case Actions.Delete:
+                    Console.WriteLine("User was removed from list");
+                    break;
+                case Actions.Load:
+                    Console.WriteLine("User's list was loaded from file");
+                    break;
+                case Actions.Save:
+                    Console.WriteLine("User's lsit saved to file");
+                    break;
+            }
             if(args.userInfo != null)
             {
                 Console.WriteLine(args.userInfo);

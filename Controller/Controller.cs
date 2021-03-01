@@ -9,7 +9,7 @@ namespace Controllers
     /// </summary>
     public class BookController
     {
-        public event EventHandler<RequestEventArgs> ControllerEvent;
+        public event EventHandler<ActionEventArgs> ControllerEvent;
 
         private readonly Users users;
 
@@ -20,19 +20,30 @@ namespace Controllers
 
         public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            ControllerEvent?.Invoke(this, new RequestEventArgs("All user's information from list;", null));
+            ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.GetAll, null));
             return users.GetUsers();
         }
-        public UserInfo GetUser(string name, string surname)
+
+        public bool Exists(string name, string surname)
         {
-            UserInfo user = users.GetUser(name, surname);
-            if (user == null)
+            if(users.Exists(name, surname))
             {
-                ControllerEvent?.Invoke(this, new RequestEventArgs("This user wasn't found;", null));
+                return true;
             }
             else
             {
-                ControllerEvent?.Invoke(this, new RequestEventArgs("Found him", user));
+                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Check, null));
+                return false;
+            }
+        }
+
+        public UserInfo GetUser(string name, string surname)
+        {
+            UserInfo user = null;
+            if (Exists(name, surname))
+            {
+                user = users.GetUser(name, surname);
+                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Get, user));
             }
             return user;
         }
@@ -47,44 +58,40 @@ namespace Controllers
         /// <returns></returns>
         public void AddUser(string name, string surname, string phone)
         {
-            if (users.Exists(name, surname) || users.Exists(phone))
+            if (!Exists(name, surname))
             {
-                ControllerEvent?.Invoke(this, new RequestEventArgs("This user already exists", null));
+                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Add, users.AddUserInfo(name, surname, phone)));
             }
-            ControllerEvent?.Invoke(this, new RequestEventArgs("A new user was added", users.AddUserInfo(name, surname, phone)));
         }
 
-        public void EditUser(string name, string surname, string newValue, Parameter parameter)
+        public void EditUser(string name, string surname, string newValue, Parameters parameter)
         {
-
-            UserInfo user = users.GetUser(name, surname);
-            if (user != null)
+            if (Exists(name, surname))
             {
+                UserInfo user = users.GetUser(name, surname);
                 users.EditInfo(user, newValue, parameter);
-                ControllerEvent?.Invoke(this, new RequestEventArgs("User was edited", user));
+                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Edit, user));
             }
-            ControllerEvent?.Invoke(this, new RequestEventArgs("This user doesn't exist", null));
         }
 
         public void DeleteUser(string name, string surname)
         {
-            if (users.Exists(name, surname))
+            if (Exists(name, surname))
             {
                 users.DeleteUser(name, surname);
-                ControllerEvent?.Invoke(this, new RequestEventArgs("Removed succesfully", null));
+                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Delete, null));
             }
-            ControllerEvent?.Invoke(this, new RequestEventArgs("This user doesn't exist", null));
         }
         public void LoadDB()
         {
             users.LoadUsers();
-            ControllerEvent?.Invoke(this, new RequestEventArgs("User's list was loaded from file", null));
+            ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Load, null));
         }
 
         public void SaveDB()
         {
             users.SaveUsers();
-            ControllerEvent?.Invoke(this, new RequestEventArgs("User's lsit saved to file", null));
+            ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Load, null));
         }
     }
 }
