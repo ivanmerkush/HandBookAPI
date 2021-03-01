@@ -1,125 +1,156 @@
 ﻿using Models;
+using Controllers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Views
 {
-    sealed public class ConsoleView : HandbookView
+    sealed public class ConsoleView : IHandbookView
     {
+        private readonly BookController controller;
+
         public void Start()
         {
             while (true)
             {
                 PrintMethods();
-                int.TryParse(Read(), out int choice);
+                int.TryParse(Console.ReadLine(), out int choice);
                 switch (choice)
                 {
                     case 1:
-                        IReadOnlyCollection<UserInfo> list = GetUsers();
-                        foreach (UserInfo user in list)
-                        {
-                            PrintUser(user);
-                        }
+                        GetUsers();
                         break;
                     case 2:
-                        Print("Write name and surname of user:");
-                        string[] values = Read().Split(' ');
-                        if (values.Length != 2)
-                        {
-                            Print("Wrong amount of arguments.");
-                        }
-                        else
-                        {
-                            UserInfo userInfo = GetUserByNameAndSurname(values[0], values[1]);
-                            if (userInfo == null)
-                            {
-                                Print("User with name " + values[0] + " and surname " + values[1] + " not found");
-                            }
-                            else
-                            {
-                                PrintUser(userInfo);
-                            }
-
-                        }
+                        GetUserByNameAndSurname();
                         break;
                     case 3:
-                        Print("Write name surname and phone of new user:");
-                        values = Read().Split(' ');
-                        if (values.Length != 3)
-                        {
-                            Print("Wrong amount of arguments.");
-                        }
-                        else
-                        {
-                            if (!AddUser(values[0], values[1], values[2]))
-                            {
-                                Print("User already exists.");
-                            }
-                        }
+                        AddUser();
                         break;
                     case 4:
-                        Print("Write which parameter you want to change:");
-                        if (Enum.TryParse(Read(), out Parameter parameter))
-                        {
-                            Print("Write name and surname of user");
-                            values = Read().Split(' ');
-                            Print("Write new value for this user");
-                            string newValue = Read();
-                            if (values.Length != 2)
-                            {
-                                Print("Wrong amount of arguments.");
-                            }
-                            else
-                            {
-                                if (!EditUser(values[0], values[1], newValue, parameter))
-                                {
-                                    Print("User not found.");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Print("There are no such parameter;");
-                        }
+                        EditUser();
                         break;
                     case 5:
-                        Print("Write name and surname of prey:");
-                        values = Read().Split(' ');
-                        if (values.Length != 2)
-                        {
-                            Print("Wrong amount of arguments.");
-                        }
-                        else
-                        {
-                            if (!DeleteUser(values[0], values[1]))
-                            {
-                                Print("There is no such user");
-                            }
-                        }
+                        DeleteUser();
                         break;
                     case 6:
-                        Print("Loading Users from file;");
                         LoadDB();
                         break;
                     case 7:
-                        Print("Saving User to file");
                         SaveDB();
                         break;
                     case 8:
+                        Console.WriteLine("Bye.");
                         return;
                     default:
-                        Print("Wrong request format/number. Try again.");
+                        Console.WriteLine("Wrong request format/number. Try again.");
                         break;
                 }
             }
         }
 
-        public override void Print(string text) => Console.WriteLine(text);
+        public ConsoleView()
+        {
+            controller = new BookController();
+            controller.ControllerEvent += OnEndingRequest;
+        }
 
-        public override void PrintUser(UserInfo userInfo) => Console.WriteLine(userInfo);
 
-        public override string Read() => Console.ReadLine();
+        public void AddUser()
+        {
+            Console.WriteLine("Write name surname and phone of new user:");
+            string[] values = Console.ReadLine().Split(' ');
+            if (values.Length != 3)
+            {
+                Console.WriteLine("Wrong amount of arguments.");
+            }
+            else
+            {
+                controller.AddUser(values[0], values[1], values[2]);
+            }
+        }
+
+        public void DeleteUser()
+        {
+            Console.WriteLine("Write name and surname of prey:");
+            string[] values = Console.ReadLine().Split(' ');
+            if (values.Length != 2)
+            {
+                Console.WriteLine("Wrong amount of arguments.");
+            }
+            else
+            {
+                controller.DeleteUser(values[0], values[1]);
+            }
+        }
+
+        public void EditUser()
+        {
+            Console.WriteLine("Enter parameter you want to be edited");
+            if(!Enum.TryParse(Console.ReadLine(), out Parameter parameter))
+            {
+                Console.WriteLine("There are no this parameter");
+            }
+            else
+            {
+                Console.WriteLine("Enter name and surname:");
+                string[] values = Console.ReadLine().Split(' ');
+                Console.WriteLine("Write new value for this user");
+                string newValue = Console.ReadLine();
+                if (values.Length != 2)
+                {
+                    Console.WriteLine("Wrong amount of arguments.");
+                }
+                else
+                {
+                    controller.EditUser(values[0], values[1], newValue, parameter);
+                }
+            }
+            
+
+        }
+
+        public void GetUserByNameAndSurname()
+        {
+            Console.WriteLine("Enter name and surname:");
+            string[] values = Console.ReadLine().Split(' ');
+            if(values.Length != 2)
+            {
+                Console.WriteLine("Wrong amount of arguments");
+            }
+            else
+            {
+                controller.GetUser(values[0], values[1]);
+            }
+        }
+
+        public void GetUsers()
+        {
+            IReadOnlyCollection<UserInfo> list = controller.GetUsers();
+            foreach(UserInfo user in list)
+            {
+                Console.WriteLine(user);
+            }
+        }
+
+        public void LoadDB()
+        {
+            controller.LoadDB();
+        }
+
+        public void SaveDB()
+        {
+            controller.SaveDB();
+        }
+
+        private void OnEndingRequest(object sender, RequestEventArgs args)
+        {
+            Console.WriteLine(args.message);
+            if(args.userInfo != null)
+            {
+                Console.WriteLine(args.userInfo);
+            }
+        }
 
         private void PrintMethods()
         {

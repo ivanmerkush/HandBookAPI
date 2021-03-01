@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -10,9 +9,8 @@ namespace Models
     /// </summary>
     public class Users
     {
-        public event EventHandler<UserEventArgs> Changed;
 
-        private List<UserInfo> userList;
+        private readonly List<UserInfo> userList;
 
         public Users()
         {
@@ -68,9 +66,8 @@ namespace Models
         /// <param name="parameter"></param>
         public void EditInfo(UserInfo userInfo, string newValue, Parameter parameter)
         {
-            
+
             UserInfo edited = userInfo.ChangeValue(newValue, parameter);
-            Changed(this, new UserEventArgs(edited, "User was edited."));
         }
 
         /// <summary>
@@ -79,11 +76,11 @@ namespace Models
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <param name="phone"></param>
-        public void AddUserInfo(string name, string surname, string phone)
+        public UserInfo AddUserInfo(string name, string surname, string phone)
         {
             UserInfo userInfo = new UserInfo(name, surname, phone);
             userList.Add(userInfo);
-            Changed(this, new UserEventArgs(userInfo, "New user's infromation was added to list."));
+            return userInfo;
         }
 
         /// <summary>
