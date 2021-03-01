@@ -24,25 +24,11 @@ namespace Controllers
             return users.GetUsers();
         }
 
-        public bool Exists(string name, string surname)
-        {
-            if(users.Exists(name, surname))
-            {
-                return true;
-            }
-            else
-            {
-                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Check, null));
-                return false;
-            }
-        }
-
         public UserInfo GetUser(string name, string surname)
         {
-            UserInfo user = null;
-            if (Exists(name, surname))
+            UserInfo user = users.GetUser(name, surname);
+            if (user != null)
             {
-                user = users.GetUser(name, surname);
                 ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Get, user));
             }
             return user;
@@ -56,31 +42,39 @@ namespace Controllers
         /// <param name="surname"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public void AddUser(string name, string surname, string phone)
+        public bool AddUser(string name, string surname, string phone)
         {
-            if (!Exists(name, surname))
+            if (users.Exists(name, surname) || users.Exists(phone))
             {
-                ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Add, users.AddUserInfo(name, surname, phone)));
+                return false;
             }
+            ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Add, users.AddUserInfo(name, surname, phone)));
+            return true;
         }
 
-        public void EditUser(string name, string surname, string newValue, Parameters parameter)
+        public bool EditUser(string name, string surname, string newValue, Parameters parameter)
         {
-            if (Exists(name, surname))
+
+            UserInfo user = users.GetUser(name, surname);
+            if (user != null)
             {
-                UserInfo user = users.GetUser(name, surname);
                 users.EditInfo(user, newValue, parameter);
                 ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Edit, user));
+                return true;
             }
+            return false;
+
         }
 
-        public void DeleteUser(string name, string surname)
+        public bool DeleteUser(string name, string surname)
         {
-            if (Exists(name, surname))
+            if (users.Exists(name, surname))
             {
                 users.DeleteUser(name, surname);
                 ControllerEvent?.Invoke(this, new ActionEventArgs(Actions.Delete, null));
+                return true;
             }
+            return false;
         }
         public void LoadDB()
         {

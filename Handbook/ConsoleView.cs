@@ -66,7 +66,10 @@ namespace Views
             }
             else
             {
-                controller.AddUser(values[0], values[1], values[2]);
+                if(!controller.AddUser(values[0], values[1], values[2]))
+                {
+                    Console.WriteLine("This user already exists");
+                }
             }
         }
 
@@ -80,7 +83,10 @@ namespace Views
             }
             else
             {
-                controller.DeleteUser(values[0], values[1]);
+                if(!controller.DeleteUser(values[0], values[1]))
+                {
+                    Console.WriteLine("This user doesn't exists");
+                }
             }
         }
 
@@ -103,7 +109,10 @@ namespace Views
                 }
                 else
                 {
-                    controller.EditUser(values[0], values[1], newValue, parameter);
+                    if(!controller.EditUser(values[0], values[1], newValue, parameter))
+                    {
+                        Console.WriteLine("This user doesn't exists");
+                    }
                 }
             }
             
@@ -147,9 +156,6 @@ namespace Views
         {
             switch(args.action)
             {
-                case Actions.Check:
-                    Console.WriteLine("This user doesn't exist");
-                    break;
                 case Actions.GetAll:
                     Console.WriteLine("All users from list");
                     break;

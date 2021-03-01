@@ -16,6 +16,6 @@ namespace Controllers
 
     public enum Actions
     {
-        GetAll, Get, Add, Edit, Delete, Load, Save, Check
+        GetAll, Get, Add, Edit, Delete, Load, Save
     }
 }
