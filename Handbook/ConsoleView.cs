@@ -8,7 +8,12 @@ namespace Views
 {
     sealed public class ConsoleView : IHandbookView
     {
-        private readonly BookController controller;
+        private readonly IController controller;
+
+        public ConsoleView(IController controller)
+        {
+            this.controller = controller;
+        }
 
         public void Start()
         {
@@ -49,13 +54,6 @@ namespace Views
             }
         }
 
-        public ConsoleView()
-        {
-            controller = new BookController();
-            controller.ControllerEvent += OnEndingRequest;
-        }
-
-
         public void AddUser()
         {
             Console.WriteLine("Write name surname and phone of new user:");
@@ -66,7 +64,11 @@ namespace Views
             }
             else
             {
-                if(!controller.AddUser(values[0], values[1], values[2]))
+                if(controller.AddUser(values[0], values[1], values[2]))
+                {
+                    Console.WriteLine("User was added");
+                }
+                else
                 {
                     Console.WriteLine("This user already exists");
                 }
@@ -83,7 +85,11 @@ namespace Views
             }
             else
             {
-                if(!controller.DeleteUser(values[0], values[1]))
+                if(controller.DeleteUser(values[0], values[1]))
+                {
+                    Console.WriteLine("User was deleted");
+                }
+                else
                 {
                     Console.WriteLine("This user doesn't exists");
                 }
@@ -92,30 +98,41 @@ namespace Views
 
         public void EditUser()
         {
-            Console.WriteLine("Enter parameter you want to be edited");
-            if(!Enum.TryParse(Console.ReadLine(), out Parameters parameter))
+            Console.WriteLine("Enter name and surname:");
+            string[] values = Console.ReadLine().Split(' ');
+            if (values.Length != 2)
             {
-                Console.WriteLine("There are no this parameter");
+                Console.WriteLine("Wrong amount of arguments.");
             }
             else
             {
-                Console.WriteLine("Enter name and surname:");
-                string[] values = Console.ReadLine().Split(' ');
-                Console.WriteLine("Write new value for this user");
-                string newValue = Console.ReadLine();
-                if (values.Length != 2)
+                UserInfo user = controller.GetUser(values[0], values[1]);
+                if (user != null)
                 {
-                    Console.WriteLine("Wrong amount of arguments.");
+                    Console.WriteLine("This user exists, type new name, surname and phone");
+                    values = Console.ReadLine().Split(' ');
+                    if (values.Length != 3)
+                    {
+                        Console.WriteLine("Not enough parameters");
+                    }
+                    else
+                    {
+                        if (controller.EditUser(user, values[0], values[1], values[2]))
+                        {
+                            Console.WriteLine("User was edited");
+                        }
+                        else
+                        {
+                            Console.WriteLine("User with this values already exists");
+                        }
+                    }
+
                 }
                 else
                 {
-                    if(!controller.EditUser(values[0], values[1], newValue, parameter))
-                    {
-                        Console.WriteLine("This user doesn't exists");
-                    }
+                    Console.WriteLine("This user doesn't exists");
                 }
             }
-            
 
         }
 
@@ -129,7 +146,7 @@ namespace Views
             }
             else
             {
-                controller.GetUser(values[0], values[1]);
+                Console.WriteLine(controller.GetUser(values[0], values[1]));
             }
         }
 
@@ -144,7 +161,7 @@ namespace Views
 
         public void LoadDB()
         {
-            controller.LoadDB();
+            Console.WriteLine(controller.LoadDB());
         }
 
         public void SaveDB()
@@ -152,50 +169,18 @@ namespace Views
             controller.SaveDB();
         }
 
-        private void OnEndingRequest(object sender, ActionEventArgs args)
-        {
-            switch(args.action)
-            {
-                case Actions.GetAll:
-                    Console.WriteLine("All users from list");
-                    break;
-                case Actions.Get:
-                    Console.WriteLine("Here is user's info");
-                    break;
-                case Actions.Add:
-                    Console.WriteLine("A new user was added");
-                    break;
-                case Actions.Edit:
-                    Console.WriteLine("A user was edited");
-                    break;
-                case Actions.Delete:
-                    Console.WriteLine("User was removed from list");
-                    break;
-                case Actions.Load:
-                    Console.WriteLine("User's list was loaded from file");
-                    break;
-                case Actions.Save:
-                    Console.WriteLine("User's lsit saved to file");
-                    break;
-            }
-            if(args.userInfo != null)
-            {
-                Console.WriteLine(args.userInfo);
-            }
-        }
-
         private void PrintMethods()
         {
-            Console.WriteLine("======================================\n" +
-                "Available actions:" +
-                "\n1)Get Users; " +
-                "\n2)Get User information by name and surname; " +
-                "\n3)Add User; " +
-                "\n4)Edit User; " +
-                "\n5)Delete user; " +
-                "\n6)Load Users;" +
-                "\n7)Save Users;" +
-                "\n8)Exit;");
+            Console.WriteLine("======================================" + Environment.NewLine + 
+                "Available actions:" + Environment.NewLine + 
+                "1)Get Users; " + Environment.NewLine +
+                "2)Get User information by name and surname; " + Environment.NewLine +
+                "3)Add User; " + Environment.NewLine +
+                "4)Edit User; " + Environment.NewLine +
+                "5)Delete user; " + Environment.NewLine +
+                "6)Load Users;" + Environment.NewLine +
+                "7)Save Users;" + Environment.NewLine +
+                "8)Exit;");
         }
     }
 }

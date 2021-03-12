@@ -1,7 +1,4 @@
-﻿using Models;
-using Controllers;
-
-namespace Views
+﻿namespace Views
 {
     /// <summary>
     /// Containts standart methods to work with list of users

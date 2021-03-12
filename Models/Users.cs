@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -9,7 +10,6 @@ namespace Models
     /// </summary>
     public class Users
     {
-
         private readonly List<UserInfo> userList;
 
         public Users()
@@ -64,10 +64,10 @@ namespace Models
         /// <param name="userInfo"></param>
         /// <param name="newValue"></param>
         /// <param name="parameter"></param>
-        public void EditInfo(UserInfo userInfo, string newValue, Parameters parameter)
+        public void EditInfo(UserInfo userInfo, string name, string surname, string phone)
         {
-
-            UserInfo edited = userInfo.ChangeValue(newValue, parameter);
+            int index = userList.FindIndex(user => user.Equals(userInfo) && user.Phone.Equals(userInfo.Phone)); 
+            userList[index] = new UserInfo(name, surname, phone);
         }
 
         /// <summary>
@@ -96,12 +96,12 @@ namespace Models
         /// <summary>
         /// Loads Users from file
         /// </summary>
-        public void LoadUsers()
+        public bool TryLoad()
         {
             try
             {
                 userList.Clear();
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, @"Files\Users.txt");
                 string text = File.ReadAllText(path);
                 string[] lines = text.Split('\n');
                 for (int i = 0; i < lines.Length - 1; i++)
@@ -110,17 +110,21 @@ namespace Models
                     userList.Add(new UserInfo(parameters[0], parameters[1], parameters[2]));
                 }
             }
-            catch (IOException)
+            catch(IOException)
             {
-
+                return false;
             }
-
+            catch(ArgumentNullException)
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
         /// Saves users to file
         /// </summary>
-        public void SaveUsers()
+        public bool TrySave()
         {
             try
             {
@@ -129,14 +133,18 @@ namespace Models
                 {
                     stringBuilder.Append(userInfo.ToString()).Append("\n");
                 }
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, @"Files\Users.txt");
                 File.WriteAllText(path, stringBuilder.ToString());
             }
             catch (IOException)
             {
-
+                return false;
             }
-
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 

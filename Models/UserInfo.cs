@@ -6,10 +6,10 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
-        internal string Name { get; private set; }
-        internal string Surname { get; private set; }
-        internal string Phone { get; private set; }
-
+        public string Name { get; internal set; }
+        public string Surname { get; internal set; }
+        public string Phone { get; internal set; }
+        
         internal UserInfo(string name, string surname, string phone)
         {
             Name = name;
@@ -27,28 +27,6 @@ namespace Models
             }
             return Name.Equals(userInfo.Name) &&
                    Surname.Equals(userInfo.Surname);
-        }
-
-        /// <summary>
-        /// Changes one of attributes depending on parameter value
-        /// </summary>
-        /// <param name="newValue"></param>
-        /// <param name="parameter"></param>
-        public UserInfo ChangeValue(string newValue, Parameters parameter)
-        {
-            switch (parameter)
-            {
-                case Parameters.Name:
-                    Name = newValue;
-                    break;
-                case Parameters.Surname:
-                    Surname = newValue;
-                    break;
-                case Parameters.Phone:
-                    Phone = newValue;
-                    break;
-            }
-            return this;
         }
 
         public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode();

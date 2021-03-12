@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Controllers;
 using Views;
 
 namespace ConsoleTest
@@ -7,9 +7,8 @@ namespace ConsoleTest
     {
         static void Main()
         {
-            ConsoleView view = new ConsoleView();
+            ConsoleView view = new ConsoleView(new BookController());
             view.Start();
-            
         }
     }
 }
