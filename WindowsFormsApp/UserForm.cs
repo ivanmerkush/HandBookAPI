@@ -6,7 +6,7 @@ using Views;
 using Controllers;
 using Models;
 
-namespace WinFormsInterface
+namespace WindowsFormsApp
 {
     public partial class UserForm : Form, IHandbookView
     {
@@ -49,7 +49,11 @@ namespace WinFormsInterface
 
         public void GetUser()
         {
-
+            GetForm getForm = new GetForm()
+            {
+                Owner = this
+            };
+            getForm.ShowDialog();
         }
 
         public void GetUsers()

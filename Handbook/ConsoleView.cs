@@ -2,13 +2,14 @@
 using Controllers;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Views
 {
     sealed public class ConsoleView : IHandbookView
     {
         private readonly IController controller;
+        private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public ConsoleView(IController controller)
         {
@@ -64,14 +65,22 @@ namespace Views
             }
             else
             {
-                if(controller.AddUser(values[0], values[1], values[2]))
+                if(Regex.IsMatch(values[2], pattern))
                 {
-                    Console.WriteLine("User was added");
+                    if (controller.AddUser(values[0], values[1], values[2]))
+                    {
+                        Console.WriteLine("User was added");
+                    }
+                    else
+                    {
+                        Console.WriteLine("This user already exists");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("This user already exists");
+                    Console.WriteLine("Wrong phone number");
                 }
+                
             }
         }
 
@@ -106,8 +115,8 @@ namespace Views
             }
             else
             {
-                UserInfo user = controller.GetUser(values[0], values[1]);
-                if (user != null)
+                IReadOnlyCollection<UserInfo> users = controller.GetUserByName(values[0], values[1]);
+                if (users.Count == 0)
                 {
                     Console.WriteLine("This user exists, type new name, surname and phone");
                     values = Console.ReadLine().Split(' ');
@@ -117,13 +126,23 @@ namespace Views
                     }
                     else
                     {
-                        if (controller.EditUser(user, values[0], values[1], values[2]))
+                        if(Regex.IsMatch(values[2], pattern))
                         {
-                            Console.WriteLine("User was edited");
+                            foreach (UserInfo userInfo in users)
+                            {
+                                if (controller.EditUser(userInfo, values[0], values[1], values[2]))
+                                {
+                                    Console.WriteLine("User was edited");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("User with this values already exists");
+                                }
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("User with this values already exists");
+                            Console.WriteLine("Wrong phone number");
                         }
                     }
 
@@ -138,16 +157,43 @@ namespace Views
 
         public void GetUser()
         {
-            Console.WriteLine("Enter name and surname:");
-            string[] values = Console.ReadLine().Split(' ');
-            if(values.Length != 2)
+            Console.WriteLine("Would you like to find by 1)Name or 2)Phone");
+            if(!int.TryParse(Console.ReadLine(), out int request))
             {
-                Console.WriteLine("Wrong amount of arguments");
+                Console.WriteLine("Wrong request.");
             }
             else
             {
-                Console.WriteLine(controller.GetUser(values[0], values[1]));
+                switch (request)
+                {
+                    case 1:
+                        Console.WriteLine("Enter name and surname:");
+                        string[] values = Console.ReadLine().Split(' ');
+                        if (values.Length != 2)
+                        {
+                            Console.WriteLine("Wrong amount of arguments");
+                        }
+                        else
+                        {
+                            foreach (UserInfo user in controller.GetUserByName(values[0], values[1]))
+                            {
+                                Console.WriteLine(user);
+                            }
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter phone");
+                        string phone = Console.ReadLine();
+                        if (Regex.IsMatch(phone, pattern))
+                        {
+                            Console.WriteLine(controller.GetUserByPhone(phone));
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
+                
         }
 
         public void GetUsers()

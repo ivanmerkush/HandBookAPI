@@ -21,10 +21,18 @@ namespace Controllers
             return users.GetUsers();
         }
 
-        public UserInfo GetUser(string name, string surname)
+
+        public IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname)
         {
             return users.GetUser(name, surname);
         }
+
+        public UserInfo GetUserByPhone(string phone)
+        {
+            return users.GetUser(phone);
+        }
+
+        
 
         /// <summary>
         /// Adds new user with values of name surname and phone

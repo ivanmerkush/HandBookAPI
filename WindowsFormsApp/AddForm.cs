@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace WinFormsInterface
+namespace WindowsFormsApp
 {
     partial class AddForm : Form
     {

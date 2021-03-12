@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Models;
 
-namespace WinFormsInterface
+namespace WindowsFormsApp
 {
     internal partial class EditForm : Form
     {

@@ -1,7 +1,7 @@
 ﻿
-namespace WinFormsInterface
+namespace WindowsFormsApp
 {
-    partial class AddForm
+    partial class EditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@ namespace WinFormsInterface
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.phoneBox = new System.Windows.Forms.TextBox();
-            this.addButton = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -93,15 +93,15 @@ namespace WinFormsInterface
             this.phoneBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
             this.phoneBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneBox_KeyPress);
             // 
-            // addButton
+            // editButton
             // 
-            this.addButton.Location = new System.Drawing.Point(303, 40);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(115, 30);
-            this.addButton.TabIndex = 6;
-            this.addButton.Text = "Add";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
+            this.editButton.Location = new System.Drawing.Point(303, 40);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(115, 30);
+            this.editButton.TabIndex = 6;
+            this.editButton.Text = "Edit";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // cancelButton
             // 
@@ -113,22 +113,22 @@ namespace WinFormsInterface
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // AddForm
+            // EditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 171);
             this.ControlBox = false;
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.addButton);
+            this.Controls.Add(this.editButton);
             this.Controls.Add(this.phoneBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.surnameBox);
             this.Controls.Add(this.nameBox);
-            this.Name = "AddForm";
-            this.Text = "AddForm";
+            this.Name = "EditForm";
+            this.Text = "EditForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,7 +142,7 @@ namespace WinFormsInterface
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox phoneBox;
-        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button cancelButton;
     }
 }

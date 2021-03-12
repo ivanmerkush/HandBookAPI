@@ -34,9 +34,14 @@ namespace Models
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public UserInfo GetUser(string name, string surname)
+        public IReadOnlyCollection<UserInfo> GetUser(string name, string surname)
         {
-            return userList.Find(user => user.Name.Equals(name) && user.Surname.Equals(surname));
+            return userList.FindAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
+        }
+
+        public UserInfo GetUser(string phone)
+        {
+            return userList.Find(user => user.Phone == phone);
         }
 
         /// <summary>
@@ -108,9 +113,10 @@ namespace Models
             try
             {
                 userList.Clear();
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, @"Files\Users.txt");
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
                 string text = File.ReadAllText(path);
-                string[] lines = text.Split('\n');
+                string[] lines = text.Split(new[] { Environment.NewLine },
+                                            StringSplitOptions.None);
                 for (int i = 0; i < lines.Length - 1; i++)
                 {
                     string[] parameters = lines[i].Split(' ');
@@ -138,9 +144,9 @@ namespace Models
                 StringBuilder stringBuilder = new StringBuilder();
                 foreach (UserInfo userInfo in userList)
                 {
-                    stringBuilder.Append(userInfo.ToString()).Append("\n");
+                    stringBuilder.Append(userInfo.ToString()).Append(Environment.NewLine);
                 }
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, @"Files\Users.txt");
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
                 File.WriteAllText(path, stringBuilder.ToString());
             }
             catch (IOException)

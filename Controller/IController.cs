@@ -6,7 +6,8 @@ namespace Controllers
     public interface IController
     {
         IReadOnlyCollection<UserInfo> GetUsers();
-        UserInfo GetUser(string name, string surname);
+        IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname);
+        UserInfo GetUserByPhone(string phone);
         bool AddUser(string name, string surname, string phone);
         bool EditUser(UserInfo user, string name, string surname, string phone);
         bool DeleteUser(string name, string surname);

@@ -1,5 +1,5 @@
 ﻿
-namespace WinFormsInterface
+namespace WindowsFormsApp
 {
     partial class UserForm
     {
