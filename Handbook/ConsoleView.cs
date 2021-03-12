@@ -27,7 +27,7 @@ namespace Views
                         GetUsers();
                         break;
                     case 2:
-                        GetUserByNameAndSurname();
+                        GetUser();
                         break;
                     case 3:
                         AddUser();
@@ -136,7 +136,7 @@ namespace Views
 
         }
 
-        public void GetUserByNameAndSurname()
+        public void GetUser()
         {
             Console.WriteLine("Enter name and surname:");
             string[] values = Console.ReadLine().Split(' ');

@@ -17,20 +17,6 @@ namespace Models
             Phone = phone;
         }
 
-        public override bool Equals(object obj) => Equals(obj as UserInfo);
-
-        public bool Equals(UserInfo userInfo)
-        {
-            if (userInfo == null)
-            {
-                return false;
-            }
-            return Name.Equals(userInfo.Name) &&
-                   Surname.Equals(userInfo.Surname);
-        }
-
-        public override int GetHashCode() => Name.GetHashCode() + 13 * Surname.GetHashCode();
-
         public override string ToString() => string.Join(" ", Name, Surname, Phone);
     }
 }

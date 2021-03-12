@@ -45,6 +45,8 @@ namespace WinFormsInterface
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(197, 20);
             this.nameBox.TabIndex = 0;
+            this.nameBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.nameBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NameBox_KeyPress);
             // 
             // surnameBox
             // 
@@ -52,6 +54,8 @@ namespace WinFormsInterface
             this.surnameBox.Name = "surnameBox";
             this.surnameBox.Size = new System.Drawing.Size(197, 20);
             this.surnameBox.TabIndex = 1;
+            this.surnameBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.surnameBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NameBox_KeyPress);
             // 
             // label1
             // 
@@ -86,6 +90,8 @@ namespace WinFormsInterface
             this.phoneBox.Name = "phoneBox";
             this.phoneBox.Size = new System.Drawing.Size(197, 20);
             this.phoneBox.TabIndex = 5;
+            this.phoneBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.phoneBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneBox_KeyPress);
             // 
             // addButton
             // 
@@ -107,7 +113,7 @@ namespace WinFormsInterface
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // AddUser
+            // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -121,7 +127,7 @@ namespace WinFormsInterface
             this.Controls.Add(this.label1);
             this.Controls.Add(this.surnameBox);
             this.Controls.Add(this.nameBox);
-            this.Name = "AddUser";
+            this.Name = "AddForm";
             this.Text = "AddForm";
             this.ResumeLayout(false);
             this.PerformLayout();

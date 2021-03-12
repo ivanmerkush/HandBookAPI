@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsInterface", "Window
 		{F38FD89F-E88C-4831-9411-487399FC7956} = {F38FD89F-E88C-4831-9411-487399FC7956}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{B53DB939-E01A-4BD1-9883-313645FB71B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{40C8FD7C-3B0B-408E-97B5-50F82EECE3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40C8FD7C-3B0B-408E-97B5-50F82EECE3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40C8FD7C-3B0B-408E-97B5-50F82EECE3E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53DB939-E01A-4BD1-9883-313645FB71B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53DB939-E01A-4BD1-9883-313645FB71B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53DB939-E01A-4BD1-9883-313645FB71B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53DB939-E01A-4BD1-9883-313645FB71B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

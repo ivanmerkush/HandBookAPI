@@ -36,7 +36,6 @@ namespace WinFormsInterface
             this.addButton = new System.Windows.Forms.ToolStripMenuItem();
             this.editButton = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.getAllButton = new System.Windows.Forms.ToolStripMenuItem();
             this.dbMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.loadButton = new System.Windows.Forms.ToolStripMenuItem();
             this.saveButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,8 +65,7 @@ namespace WinFormsInterface
             this.getButton,
             this.addButton,
             this.editButton,
-            this.deleteButton,
-            this.getAllButton});
+            this.deleteButton});
             this.userMenu.Name = "userMenu";
             this.userMenu.Size = new System.Drawing.Size(47, 20);
             this.userMenu.Text = "Users";
@@ -75,14 +73,14 @@ namespace WinFormsInterface
             // getButton
             // 
             this.getButton.Name = "getButton";
-            this.getButton.Size = new System.Drawing.Size(107, 22);
+            this.getButton.Size = new System.Drawing.Size(180, 22);
             this.getButton.Text = "Get";
             this.getButton.Click += new System.EventHandler(this.GetButton_Click);
             // 
             // addButton
             // 
             this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(107, 22);
+            this.addButton.Size = new System.Drawing.Size(180, 22);
             this.addButton.Text = "Add";
             this.addButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
@@ -90,7 +88,7 @@ namespace WinFormsInterface
             // 
             this.editButton.Enabled = false;
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(107, 22);
+            this.editButton.Size = new System.Drawing.Size(180, 22);
             this.editButton.Text = "Edit";
             this.editButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
@@ -98,16 +96,9 @@ namespace WinFormsInterface
             // 
             this.deleteButton.Enabled = false;
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(107, 22);
+            this.deleteButton.Size = new System.Drawing.Size(180, 22);
             this.deleteButton.Text = "Delete";
             this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
-            // 
-            // getAllButton
-            // 
-            this.getAllButton.Name = "getAllButton";
-            this.getAllButton.Size = new System.Drawing.Size(107, 22);
-            this.getAllButton.Text = "Get all";
-            this.getAllButton.Click += new System.EventHandler(this.GetAllButton_Click);
             // 
             // dbMenu
             // 
@@ -209,7 +200,6 @@ namespace WinFormsInterface
         private System.Windows.Forms.ToolStripMenuItem addButton;
         private System.Windows.Forms.ToolStripMenuItem editButton;
         private System.Windows.Forms.ToolStripMenuItem deleteButton;
-        private System.Windows.Forms.ToolStripMenuItem getAllButton;
         private System.Windows.Forms.ToolStripMenuItem dbMenu;
         private System.Windows.Forms.ToolStripMenuItem loadButton;
         private System.Windows.Forms.ToolStripMenuItem saveButton;

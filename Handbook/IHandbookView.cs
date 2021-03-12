@@ -7,7 +7,7 @@
     {
         void GetUsers();
 
-        void GetUserByNameAndSurname();
+        void GetUser();
 
         void AddUser();
 

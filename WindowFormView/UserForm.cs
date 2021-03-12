@@ -47,7 +47,7 @@ namespace WinFormsInterface
             editForm.ShowDialog();
         }
 
-        public void GetUserByNameAndSurname()
+        public void GetUser()
         {
 
         }
@@ -94,14 +94,9 @@ namespace WinFormsInterface
 
         }
 
-        private void GetAllButton_Click(object sender, EventArgs e)
-        {
-            GetUsers();
-        }
-
         private void GetButton_Click(object sender, EventArgs e)
         {
-            GetUserByNameAndSurname();
+            GetUser();
         }
 
         private void AddButton_Click(object sender, EventArgs e)

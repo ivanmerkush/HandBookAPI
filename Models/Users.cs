@@ -40,6 +40,13 @@ namespace Models
         }
 
         /// <summary>
+        /// Checks if user with this phone exists
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        public bool Exists(string phone) => userList.Exists(user => user.Phone == phone);
+
+        /// <summary>
         /// Checks if this user exists in list
         /// </summary>
         /// <param name="name"></param>
@@ -47,16 +54,16 @@ namespace Models
         /// <returns></returns>
         public bool Exists(string name, string surname)
         {
-            return userList.Exists(user => user.Name.Equals(name) &&
-                                           user.Surname.Equals(surname));
+            return userList.Exists(user => user.Name == name &&
+                                           user.Surname == surname);
         }
 
-        /// <summary>
-        /// Checks if user with this phone exists
-        /// </summary>
-        /// <param name="phone"></param>
-        /// <returns></returns>
-        public bool Exists(string phone) => userList.Exists(user => user.Phone.Equals(phone));
+        public bool Exists(string name, string surname, string phone)
+        {
+            return userList.Exists(user => user.Name == name &&
+                                           user.Surname == surname &&
+                                           user.Phone == phone);
+        }
 
         /// <summary>
         /// Edits information about some user

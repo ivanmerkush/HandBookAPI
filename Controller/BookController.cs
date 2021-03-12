@@ -46,7 +46,7 @@ namespace Controllers
 
         public bool EditUser(UserInfo user, string name, string surname, string phone)
         {
-            if (users.Exists(phone))
+            if (users.Exists(name, surname, phone))
             {
                 return false;
             }

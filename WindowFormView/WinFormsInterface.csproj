@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{40C8FD7C-3B0B-408E-97B5-50F82EECE3E9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WindowFormView</RootNamespace>
-    <AssemblyName>WindowFormView</AssemblyName>
+    <RootNamespace>WinFormdsInterface</RootNamespace>
+    <AssemblyName>WinFormsInterface</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -89,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
