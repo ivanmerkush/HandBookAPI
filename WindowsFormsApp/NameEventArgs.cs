@@ -2,17 +2,15 @@
 
 namespace WindowsFormsApp
 {
-    class UserEventArgs : EventArgs
+    class NameEventArgs : EventArgs
     {
         internal readonly string name;
         internal readonly string surname;
-        internal readonly string phone;
 
-        internal UserEventArgs(string name, string surname, string phone)
+        public NameEventArgs(string name, string surname)
         {
             this.name = name;
             this.surname = surname;
-            this.phone = phone;
         }
     }
 }

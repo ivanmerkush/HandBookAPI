@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Views;
@@ -22,11 +21,8 @@ namespace WindowsFormsApp
         {
             AddForm addForm = new AddForm();
             addForm.UserAdded += AddEventHandler;
-            addForm.FormClosing += (sender, e) =>
-            {
-                addForm.UserAdded -= AddEventHandler;
-            };
             addForm.ShowDialog();
+            addForm.UserAdded -= AddEventHandler;
 
         }
 
@@ -57,13 +53,10 @@ namespace WindowsFormsApp
         {
             EditForm editForm = new EditForm((UserInfo)userList.SelectedItem);
             editForm.UserEdited += EditEventHandler;
-            editForm.FormClosing += (sender, e) =>
-            {
-                editForm.UserEdited -= EditEventHandler;
-                editButton.Enabled = false;
-                deleteButton.Enabled = false;
-            };
             editForm.ShowDialog();
+            editForm.UserEdited -= EditEventHandler;
+            editButton.Enabled = false;
+            deleteButton.Enabled = false;
         }
 
         private void EditEventHandler(object sender, UserEventArgs e)
@@ -81,11 +74,28 @@ namespace WindowsFormsApp
 
         public void GetUser()
         {
-            GetForm getForm = new GetForm()
-            {
-                Owner = this
-            };
+            GetForm getForm = new GetForm();
+            getForm.GetByName += NameEventHandler;
+            getForm.GetByPhone += PhoneEventHandler;
             getForm.ShowDialog();
+            getForm.GetByName -= NameEventHandler;
+            getForm.GetByPhone -= PhoneEventHandler;
+        }
+
+        private void NameEventHandler(object sender, NameEventArgs e)
+        {
+            if (sender is GetForm temp)
+            {
+                temp.users = controller.GetUserByName(e.name, e.surname).ToArray();
+            }
+        }
+
+        private void PhoneEventHandler(object sender, PhoneEventArgs e)
+        {
+            if (sender is GetForm temp)
+            {
+                temp.user = controller.GetUserByPhone(e.phone);
+            }
         }
 
         public void GetUsers()

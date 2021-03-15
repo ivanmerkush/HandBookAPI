@@ -25,7 +25,7 @@ namespace WindowsFormsApp
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            UserEdited(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            UserEdited.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
             Close();
         }
 

@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Models;
 
 namespace WindowsFormsApp
 {
-    public partial class GetForm : Form
+    internal partial class GetForm : Form
     {
-
+        internal event EventHandler<PhoneEventArgs> GetByPhone;
+        internal event EventHandler<NameEventArgs> GetByName;
+        internal UserInfo user;
+        internal UserInfo[] users; 
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public GetForm()
@@ -23,10 +25,8 @@ namespace WindowsFormsApp
                 usersBox.Items.Clear();
                 if (nameBox.Text != string.Empty && surnameBox.Text != string.Empty)
                 {
-                    if(Owner is UserForm userForm)
-                    {
-                        usersBox.Items.AddRange(userForm.controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
-                    }
+                    GetByName.Invoke(this, new NameEventArgs(nameBox.Text, surnameBox.Text));
+                    usersBox.Items.AddRange(users);
                 }
             }
             else
@@ -34,18 +34,16 @@ namespace WindowsFormsApp
                 userBox.Clear();
                 if (Regex.IsMatch(phoneBox.Text, pattern))
                 {
-                    if (Owner is UserForm userForm)
+                    GetByPhone.Invoke(this, new PhoneEventArgs(phoneBox.Text));
+                    if (user != null)
                     {
-                        UserInfo user = userForm.controller.GetUserByPhone(phoneBox.Text);
-                        if(user != null)
-                        {
-                            userBox.Text = user.ToString();
-                        }
-                        else
-                        {
-                            userBox.Text = "Not found";
-                        }
+                        userBox.Text = user.ToString();
                     }
+                    else
+                    {
+                        userBox.Text = "Not found";
+                    }
+
                 }
             }
         }

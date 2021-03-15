@@ -15,11 +15,9 @@ namespace WindowsFormsApp
             addButton.Enabled = false;
         }
 
-
-
         private void AddButton_Click(object sender, EventArgs e)
         {
-            UserAdded(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            UserAdded.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
             Close();
         }
 
