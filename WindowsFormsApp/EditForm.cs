@@ -7,10 +7,9 @@ namespace WindowsFormsApp
 {
     internal partial class EditForm : Form
     {
-        private readonly UserInfo userInfo;
+        internal event EventHandler<UserEventArgs> UserEdited;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
-        internal string message = string.Empty;
-
+        
         public EditForm()
         {
             InitializeComponent();
@@ -19,7 +18,6 @@ namespace WindowsFormsApp
         public EditForm(UserInfo userInfo)
         {
             InitializeComponent();
-            this.userInfo = userInfo;
             nameBox.Text = userInfo.Name;
             surnameBox.Text = userInfo.Surname;
             phoneBox.Text = userInfo.Phone;
@@ -27,19 +25,8 @@ namespace WindowsFormsApp
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            if (Owner is UserForm userForm)
-            {
-                if (userForm.controller.EditUser(userInfo, nameBox.Text, surnameBox.Text, phoneBox.Text))
-                {
-                    message = ">User was edited." + Environment.NewLine;
-                    userForm.GetUsers();
-                }
-                else
-                {
-                    message = ">Not unique attributes" + Environment.NewLine;
-                }
-                Close();
-            }
+            UserEdited(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

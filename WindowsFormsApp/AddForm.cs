@@ -6,8 +6,8 @@ namespace WindowsFormsApp
 {
     partial class AddForm : Form
     {
+        internal event EventHandler<UserEventArgs> UserAdded;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
-        internal string message = string.Empty;
 
         internal AddForm()
         {
@@ -15,21 +15,12 @@ namespace WindowsFormsApp
             addButton.Enabled = false;
         }
 
+
+
         private void AddButton_Click(object sender, EventArgs e)
         {
-            if (Owner is UserForm userForm)
-            {
-                if (userForm.controller.AddUser(nameBox.Text, surnameBox.Text, phoneBox.Text))
-                {
-                    message = ">New user was added" + Environment.NewLine;
-                }
-                else
-                {
-                    message = ">This user already exists" + Environment.NewLine;
-                }
-                userForm.GetUsers();
-                Close();
-            }
+            UserAdded(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

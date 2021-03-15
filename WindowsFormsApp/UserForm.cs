@@ -20,19 +20,27 @@ namespace WindowsFormsApp
 
         public void AddUser()
         {
-            AddForm addForm = new AddForm
-            {
-                Owner = this
-            };
+            AddForm addForm = new AddForm();
+            addForm.UserAdded += AddEventHandler;
             addForm.FormClosing += (sender, e) =>
             {
-                if (addForm.message != string.Empty)
-                {
-                    textBox.AppendText(addForm.message);
-                }
+                addForm.UserAdded -= AddEventHandler;
             };
             addForm.ShowDialog();
 
+        }
+
+        private void AddEventHandler(object sender, UserEventArgs e)
+        {
+            if (controller.AddUser(e.name, e.surname, e.phone))
+            {
+                textBox.AppendText(">New user was added" + Environment.NewLine);
+                GetUsers();
+            }
+            else
+            {
+                textBox.AppendText(">This user already exists" + Environment.NewLine);
+            }
         }
 
         public void DeleteUser()
@@ -47,20 +55,28 @@ namespace WindowsFormsApp
 
         public void EditUser()
         {
-            EditForm editForm = new EditForm((UserInfo)userList.SelectedItem)
-            {
-                Owner = this
-            };
+            EditForm editForm = new EditForm((UserInfo)userList.SelectedItem);
+            editForm.UserEdited += EditEventHandler;
             editForm.FormClosing += (sender, e) =>
             {
-                if (editForm.message != string.Empty)
-                {
-                    textBox.AppendText(editForm.message);
-                }
+                editForm.UserEdited -= EditEventHandler;
                 editButton.Enabled = false;
                 deleteButton.Enabled = false;
             };
             editForm.ShowDialog();
+        }
+
+        private void EditEventHandler(object sender, UserEventArgs e)
+        {
+            if (controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
+            {
+                textBox.AppendText(">User was edited." + Environment.NewLine);
+                GetUsers();
+            }
+            else
+            {
+                textBox.AppendText(">Not unique attributes" + Environment.NewLine);
+            }
         }
 
         public void GetUser()
