@@ -24,6 +24,13 @@ namespace WindowsFormsApp
             {
                 Owner = this
             };
+            addForm.FormClosing += (sender, e) =>
+            {
+                if (addForm.message != string.Empty)
+                {
+                    textBox.AppendText(addForm.message);
+                }
+            };
             addForm.ShowDialog();
 
         }
@@ -43,6 +50,15 @@ namespace WindowsFormsApp
             EditForm editForm = new EditForm((UserInfo)userList.SelectedItem)
             {
                 Owner = this
+            };
+            editForm.FormClosing += (sender, e) =>
+            {
+                if (editForm.message != string.Empty)
+                {
+                    textBox.AppendText(editForm.message);
+                }
+                editButton.Enabled = false;
+                deleteButton.Enabled = false;
             };
             editForm.ShowDialog();
         }

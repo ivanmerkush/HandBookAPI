@@ -7,8 +7,9 @@ namespace WindowsFormsApp
     partial class AddForm : Form
     {
         private readonly string pattern = @"\b^(375)+\d{9}\b";
+        internal string message = string.Empty;
 
-        public AddForm()
+        internal AddForm()
         {
             InitializeComponent();
             addButton.Enabled = false;
@@ -20,11 +21,11 @@ namespace WindowsFormsApp
             {
                 if (userForm.controller.AddUser(nameBox.Text, surnameBox.Text, phoneBox.Text))
                 {
-                    userForm.textBox.AppendText(">New user was added" + Environment.NewLine);
+                    message = ">New user was added" + Environment.NewLine;
                 }
                 else
                 {
-                    userForm.textBox.AppendText(">This user already exists" + Environment.NewLine);
+                    message = ">This user already exists" + Environment.NewLine;
                 }
                 userForm.GetUsers();
                 Close();

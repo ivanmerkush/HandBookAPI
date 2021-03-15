@@ -9,6 +9,7 @@ namespace WindowsFormsApp
     {
         private readonly UserInfo userInfo;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
+        internal string message = string.Empty;
 
         public EditForm()
         {
@@ -30,12 +31,12 @@ namespace WindowsFormsApp
             {
                 if (userForm.controller.EditUser(userInfo, nameBox.Text, surnameBox.Text, phoneBox.Text))
                 {
-                    userForm.textBox.AppendText(">User was edited." + Environment.NewLine);
+                    message = ">User was edited." + Environment.NewLine;
                     userForm.GetUsers();
                 }
                 else
                 {
-                    userForm.textBox.AppendText(">Not unique attributes" + Environment.NewLine);
+                    message = ">Not unique attributes" + Environment.NewLine;
                 }
                 Close();
             }
