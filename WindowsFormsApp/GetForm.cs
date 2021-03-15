@@ -25,7 +25,7 @@ namespace WindowsFormsApp
                 usersBox.Items.Clear();
                 if (nameBox.Text != string.Empty && surnameBox.Text != string.Empty)
                 {
-                    GetByName.Invoke(this, new NameEventArgs(nameBox.Text, surnameBox.Text));
+                    GetByName?.Invoke(this, new NameEventArgs(nameBox.Text, surnameBox.Text));
                     usersBox.Items.AddRange(users);
                 }
             }
@@ -34,7 +34,7 @@ namespace WindowsFormsApp
                 userBox.Clear();
                 if (Regex.IsMatch(phoneBox.Text, pattern))
                 {
-                    GetByPhone.Invoke(this, new PhoneEventArgs(phoneBox.Text));
+                    GetByPhone?.Invoke(this, new PhoneEventArgs(phoneBox.Text));
                     if (user != null)
                     {
                         userBox.Text = user.ToString();
@@ -51,7 +51,7 @@ namespace WindowsFormsApp
         private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char letter = e.KeyChar;
-            if (letter == ' ')
+            if (letter == ' ' || !Regex.IsMatch(letter.ToString(), "[a-zA-Z0-9]", RegexOptions.IgnoreCase))
             {
                 e.Handled = true;
             }

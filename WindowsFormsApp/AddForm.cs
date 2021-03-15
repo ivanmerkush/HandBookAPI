@@ -17,7 +17,7 @@ namespace WindowsFormsApp
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            UserAdded.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            UserAdded?.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
             Close();
         }
 
@@ -29,7 +29,7 @@ namespace WindowsFormsApp
         private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char letter = e.KeyChar;
-            if(letter == ' ')
+            if (letter == ' ' || !Regex.IsMatch(letter.ToString(),"[a-zA-Z0-9]", RegexOptions.IgnoreCase))
             {
                 e.Handled = true;
             }
