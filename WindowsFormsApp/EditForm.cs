@@ -37,10 +37,11 @@ namespace WindowsFormsApp
         private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char letter = e.KeyChar;
-            if (letter == ' ' || !Regex.IsMatch(letter.ToString(), "[a-zA-Z0-9]", RegexOptions.IgnoreCase))
+            if ((letter != ' ' && letter == 8) || Regex.IsMatch(letter.ToString(), "[a-zA-Z0-9]", RegexOptions.IgnoreCase))
             {
-                e.Handled = true;
+                return;
             }
+            e.Handled = true;
         }
 
         private void PhoneBox_KeyPress(object sender, KeyPressEventArgs e)

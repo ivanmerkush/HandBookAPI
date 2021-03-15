@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Linq;
 using Models;
 
 namespace WindowsFormsApp
 {
     internal partial class GetForm : Form
     {
-        internal event EventHandler<PhoneEventArgs> GetByPhone;
-        internal event EventHandler<NameEventArgs> GetByName;
-        internal UserInfo user;
-        internal UserInfo[] users; 
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public GetForm()
@@ -25,8 +22,10 @@ namespace WindowsFormsApp
                 usersBox.Items.Clear();
                 if (nameBox.Text != string.Empty && surnameBox.Text != string.Empty)
                 {
-                    GetByName?.Invoke(this, new NameEventArgs(nameBox.Text, surnameBox.Text));
-                    usersBox.Items.AddRange(users);
+                    if (Owner is UserForm userForm)
+                    {
+                        usersBox.Items.AddRange(userForm.controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
+                    }
                 }
             }
             else
@@ -34,16 +33,18 @@ namespace WindowsFormsApp
                 userBox.Clear();
                 if (Regex.IsMatch(phoneBox.Text, pattern))
                 {
-                    GetByPhone?.Invoke(this, new PhoneEventArgs(phoneBox.Text));
-                    if (user != null)
+                    if (Owner is UserForm userForm)
                     {
-                        userBox.Text = user.ToString();
+                        UserInfo user = userForm.controller.GetUserByPhone(phoneBox.Text);
+                        if (user != null)
+                        {
+                            userBox.Text = user.ToString();
+                        }
+                        else
+                        {
+                            userBox.Text = "Not found";
+                        }
                     }
-                    else
-                    {
-                        userBox.Text = "Not found";
-                    }
-
                 }
             }
         }
@@ -51,10 +52,11 @@ namespace WindowsFormsApp
         private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char letter = e.KeyChar;
-            if (letter == ' ' || !Regex.IsMatch(letter.ToString(), "[a-zA-Z0-9]", RegexOptions.IgnoreCase))
+            if ((letter != ' ' && letter == 8) || Regex.IsMatch(letter.ToString(), "[a-zA-Z0-9]", RegexOptions.IgnoreCase))
             {
-                e.Handled = true;
+                return;
             }
+            e.Handled = true;
         }
 
         private void PhoneBox_KeyPress(object sender, KeyPressEventArgs e)

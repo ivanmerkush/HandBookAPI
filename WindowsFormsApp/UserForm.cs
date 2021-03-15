@@ -74,28 +74,11 @@ namespace WindowsFormsApp
 
         public void GetUser()
         {
-            GetForm getForm = new GetForm();
-            getForm.GetByName += NameEventHandler;
-            getForm.GetByPhone += PhoneEventHandler;
+            GetForm getForm = new GetForm()
+            {
+                Owner = this
+            };
             getForm.ShowDialog();
-            getForm.GetByName -= NameEventHandler;
-            getForm.GetByPhone -= PhoneEventHandler;
-        }
-
-        private void NameEventHandler(object sender, NameEventArgs e)
-        {
-            if (sender is GetForm temp)
-            {
-                temp.users = controller.GetUserByName(e.name, e.surname).ToArray();
-            }
-        }
-
-        private void PhoneEventHandler(object sender, PhoneEventArgs e)
-        {
-            if (sender is GetForm temp)
-            {
-                temp.user = controller.GetUserByPhone(e.phone);
-            }
         }
 
         public void GetUsers()
