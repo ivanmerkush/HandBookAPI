@@ -1,4 +1,5 @@
-﻿
+﻿using System.Text.Json.Serialization;
+
 namespace Models
 {
     /// <summary>
@@ -6,10 +7,18 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
-        public string Name { get; internal set; }
-        public string Surname { get; internal set; }
-        public string Phone { get; internal set; }
+        [JsonPropertyName("Name")]
+        public string Name { get; set; }
+        [JsonPropertyName("Surname")]
+        public string Surname { get; set; }
+        [JsonPropertyName("Phone")]
+        public string Phone { get; set; }
         
+        internal UserInfo()
+        {
+
+        }
+
         internal UserInfo(string name, string surname, string phone)
         {
             Name = name;

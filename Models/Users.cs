@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -113,19 +115,9 @@ namespace Models
             try
             {
                 userList.Clear();
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
-                string text = File.ReadAllText(path);
-                string[] lines = text.Split(new[] { Environment.NewLine },
-                                            StringSplitOptions.None);
-                for (int i = 0; i < lines.Length - 1; i++)
-                {
-                    string[] parameters = lines[i].Split(' ');
-                    userList.Add(new UserInfo(parameters[0], parameters[1], parameters[2]));
-                }
-            }
-            catch(IOException)
-            {
-                return false;
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.json");
+                string jsonString = File.ReadAllText(path);
+                userList.AddRange(JsonSerializer.Deserialize<List<UserInfo>>(jsonString));
             }
             catch(ArgumentNullException)
             {
@@ -141,17 +133,13 @@ namespace Models
         {
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (UserInfo userInfo in userList)
+                var options = new JsonSerializerOptions
                 {
-                    stringBuilder.Append(userInfo.ToString()).Append(Environment.NewLine);
-                }
-                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.txt");
-                File.WriteAllText(path, stringBuilder.ToString());
-            }
-            catch (IOException)
-            {
-                return false;
+                    WriteIndented = true
+                };
+                string jsonUsers = JsonSerializer.Serialize(userList, options);
+                string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.json");
+                File.WriteAllText(path, jsonUsers);
             }
             catch (ArgumentNullException)
             {
@@ -161,8 +149,4 @@ namespace Models
         }
     }
 
-    public enum Parameters
-    {
-        Name, Surname, Phone
-    };
 }
