@@ -1,1 +1,8 @@
-[{"Name":"Boris","Surname":"Borisovich","Phone":"375123123123"}]
+[
+  
+  {
+    "Name": "Boris",
+    "Surname": "Borisovich",
+    "Phone": "375123123123"
+  }
+]
