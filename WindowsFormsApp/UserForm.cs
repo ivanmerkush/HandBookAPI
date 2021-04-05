@@ -7,13 +7,13 @@ using Models;
 
 namespace WindowsFormsApp
 {
-    public partial class UserForm : Form, IHandbookView
+    public partial class UserForm : Form, IUserView
     {
         internal readonly IController controller;
 
         public UserForm()
         {
-            controller = new BookController();
+            controller = new MainController(this);
             InitializeComponent();
         }
 
