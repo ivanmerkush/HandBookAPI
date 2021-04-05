@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 
 namespace Views
 {
-    sealed public class ConsoleView : IHandbookView
+    sealed public class ConsoleView : IUserView
     {
         private readonly IController controller;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
-        public ConsoleView(IController controller)
+        public ConsoleView()
         {
-            this.controller = controller;
+            controller = new MainController(this);
         }
 
         public void Start()

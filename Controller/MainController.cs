@@ -1,35 +1,38 @@
 ﻿using Models;
 using System.Collections.Generic;
 using System;
+using Views;
 
 namespace Controllers
 {
     /// <summary>
     /// Allows to review and edit list of users infromtaion
     /// </summary>
-    public class BookController : IController
+    public class MainController : IController
     {
-        private readonly Users users;
+        private readonly IModel model;
+        private readonly IUserView view;
 
-        public BookController()
+        public MainController(IUserView view)
         {
-            users = new Users();
+            model = new Users();
+            this.view = view;
         }
 
         public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            return users.GetUsers();
+            return model.GetAll();
         }
 
 
         public IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname)
         {
-            return users.GetUser(name, surname);
+            return model.GetUser(name, surname);
         }
 
         public UserInfo GetUserByPhone(string phone)
         {
-            return users.GetUser(phone);
+            return model.GetUser(phone);
         }
 
         
@@ -44,29 +47,29 @@ namespace Controllers
         /// <returns></returns>
         public bool AddUser(string name, string surname, string phone)
         {
-            if (users.Exists(phone))
+            if (model.Exists(phone))
             {
                 return false;
             }
-            users.AddUserInfo(name, surname, phone);
+            model.Add(name, surname, phone);
             return true;
         }
 
         public bool EditUser(UserInfo user, string name, string surname, string phone)
         {
-            if (users.Exists(name, surname, phone))
+            if (model.Exists(name, surname, phone))
             {
                 return false;
             }
-            users.EditInfo(user, name, surname, phone);
+            model.Edit(user, new UserInfo(name, surname, phone));
             return true;
         }
 
         public bool DeleteUser(string name, string surname)
         {
-            if (users.Exists(name, surname))
+            if (model.Exists(name, surname))
             {
-                users.DeleteUser(name, surname);
+                model.Delete(name, surname);
                 return true;
             }
             return false;
@@ -74,12 +77,20 @@ namespace Controllers
 
         public bool LoadDB()
         {
-            return users.TryLoad();
+            if (model is Users users)
+            {
+                return users.TryLoad();
+            }
+            return false;
         }
 
         public bool SaveDB()
         {
-            return users.TrySave();
+            if (model is Users users)
+            {
+                return users.TrySave();
+            }
+            return false;
         }
     }
 }

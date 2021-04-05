@@ -8,4 +8,10 @@
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Views">
+      <HintPath>..\Handbook\bin\Debug\netcoreapp3.1\Views.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

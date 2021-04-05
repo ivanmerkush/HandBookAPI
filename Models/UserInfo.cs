@@ -19,7 +19,7 @@ namespace Models
 
         }
 
-        internal UserInfo(string name, string surname, string phone)
+        public UserInfo(string name, string surname, string phone)
         {
             Name = name;
             Surname = surname;
@@ -27,5 +27,12 @@ namespace Models
         }
 
         public override string ToString() => string.Join(" ", Name, Surname, Phone);
+
+        public override bool Equals(object obj)
+        {
+            return obj is UserInfo info &&
+                   Name == info.Name &&
+                   Surname == info.Surname;
+        }
     }
 }

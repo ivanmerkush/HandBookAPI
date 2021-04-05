@@ -10,7 +10,7 @@ namespace Models
     /// <summary>
     /// Containts list of user's info and implements methods to work with it
     /// </summary>
-    public class Users
+    public class Users : IModel
     {
         private readonly List<UserInfo> userList;
 
@@ -25,7 +25,7 @@ namespace Models
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public IReadOnlyCollection<UserInfo> GetUsers()
+        public IReadOnlyCollection<UserInfo> GetAll()
         {
             return userList;
         }
@@ -36,15 +36,9 @@ namespace Models
         /// <param name="value"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public IReadOnlyCollection<UserInfo> GetUser(string name, string surname)
-        {
-            return userList.FindAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
-        }
+        public IReadOnlyCollection<UserInfo> GetUser(string name, string surname) => userList.FindAll(user => user.Name == name && user.Surname == surname);
 
-        public UserInfo GetUser(string phone)
-        {
-            return userList.Find(user => user.Phone == phone);
-        }
+        public UserInfo GetUser(string phone) => userList.Find(user => user.Phone == phone);
 
         /// <summary>
         /// Checks if user with this phone exists
@@ -75,13 +69,13 @@ namespace Models
         /// <summary>
         /// Edits information about some user
         /// </summary>
-        /// <param name="userInfo"></param>
+        /// <param name="oldUser"></param>
         /// <param name="newValue"></param>
         /// <param name="parameter"></param>
-        public void EditInfo(UserInfo userInfo, string name, string surname, string phone)
+        public void Edit(UserInfo oldUser, UserInfo newUser)
         {
-            int index = userList.FindIndex(user => user.Equals(userInfo) && user.Phone.Equals(userInfo.Phone)); 
-            userList[index] = new UserInfo(name, surname, phone);
+            int index = userList.FindIndex(user => user.Equals(oldUser) && user.Phone == oldUser.Phone); 
+            userList[index] = newUser;
         }
 
         /// <summary>
@@ -90,7 +84,7 @@ namespace Models
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <param name="phone"></param>
-        public UserInfo AddUserInfo(string name, string surname, string phone)
+        public UserInfo Add(string name, string surname, string phone)
         {
             UserInfo userInfo = new UserInfo(name, surname, phone);
             userList.Add(userInfo);
@@ -102,9 +96,9 @@ namespace Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
-        public void DeleteUser(string name, string surname)
+        public void Delete(string name, string surname)
         {
-            userList.RemoveAll(user => user.Name.Equals(name) && user.Surname.Equals(surname));
+            userList.RemoveAll(user => user.Name == name && user.Surname == surname);
         }
 
         /// <summary>

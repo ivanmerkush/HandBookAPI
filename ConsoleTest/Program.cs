@@ -7,7 +7,7 @@ namespace ConsoleTest
     {
         static void Main()
         {
-            ConsoleView view = new ConsoleView(new BookController());
+            ConsoleView view = new ConsoleView();
             view.Start();
         }
     }
