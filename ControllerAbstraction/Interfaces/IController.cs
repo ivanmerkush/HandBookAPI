@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models;
 
-namespace Controllers
+namespace ControllerAndViewAbstraction
 {
     public interface IController
     {
@@ -11,7 +11,7 @@ namespace Controllers
         bool AddUser(string name, string surname, string phone);
         bool EditUser(UserInfo user, string name, string surname, string phone);
         bool DeleteUser(string name, string surname);
-        bool LoadDB();
-        bool SaveDB();
+        void LoadDB();
+        void SaveDB();
     }
 }

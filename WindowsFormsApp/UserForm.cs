@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Views;
-using Controllers;
 using Models;
+using ControllerAndViewAbstraction;
+using DIContainer;
 
 namespace WindowsFormsApp
 {
@@ -13,7 +13,7 @@ namespace WindowsFormsApp
 
         public UserForm()
         {
-            controller = new MainController(this);
+            controller = Helper.GetMainFormController(this);
             InitializeComponent();
         }
 
@@ -28,15 +28,6 @@ namespace WindowsFormsApp
 
         private void AddEventHandler(object sender, UserEventArgs e)
         {
-            if (controller.AddUser(e.name, e.surname, e.phone))
-            {
-                textBox.AppendText(">New user was added" + Environment.NewLine);
-                GetUsers();
-            }
-            else
-            {
-                textBox.AppendText(">This user already exists" + Environment.NewLine);
-            }
         }
 
         public void DeleteUser()
@@ -89,37 +80,26 @@ namespace WindowsFormsApp
 
         public void LoadDB()
         {
-            if(controller.LoadDB())
-            {
-                textBox.AppendText(">Users were successfully loaded from file." + Environment.NewLine);
-                GetUsers();
-            }
-            else
-            {
-                MessageBox.Show("Problem happened during loading users",
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error,
-                                MessageBoxDefaultButton.Button1,
-                                MessageBoxOptions.DefaultDesktopOnly);
-            }
+            controller.LoadDB();
+            GetUsers();
+            
         }
 
         public void SaveDB()
         {
-            if(controller.SaveDB())
-            {
-                textBox.AppendText(">Users were successfully saved to file." + Environment.NewLine);
-            }
-            else
-            {
-                MessageBox.Show("Problem happened during saving users",
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error,
-                                MessageBoxDefaultButton.Button1,
-                                MessageBoxOptions.DefaultDesktopOnly);
-            }
+            //if(controller.SaveDB())
+            //{
+            //    textBox.AppendText(">Users were successfully saved to file." + Environment.NewLine);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Problem happened during saving users",
+            //                    "Error",
+            //                    MessageBoxButtons.OK,
+            //                    MessageBoxIcon.Error,
+            //                    MessageBoxDefaultButton.Button1,
+            //                    MessageBoxOptions.DefaultDesktopOnly);
+            //}
 
         }
 

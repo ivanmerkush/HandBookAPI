@@ -31,7 +31,6 @@ namespace WindowsFormsApp
         private void InitializeComponent()
         {
             this.notifierBox = new System.Windows.Forms.GroupBox();
-            this.textBox = new System.Windows.Forms.TextBox();
             this.userGroubBox = new System.Windows.Forms.GroupBox();
             this.userList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -267,7 +266,6 @@ namespace WindowsFormsApp
         #endregion
 
         private System.Windows.Forms.GroupBox notifierBox;
-        internal System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.GroupBox userGroubBox;
         private System.Windows.Forms.ListBox userList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -280,6 +278,7 @@ namespace WindowsFormsApp
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Button saveButton;
+        public readonly System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox();
     }
 }
 

@@ -1,7 +1,6 @@
-﻿using Controllers;
-using Views;
+﻿using Views;
 
-namespace ConsoleTest
+namespace ConsoleViewAPI
 {
     class Program
     {

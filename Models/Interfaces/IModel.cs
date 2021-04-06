@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Models
 {
@@ -15,5 +13,7 @@ namespace Models
         UserInfo Add(string name, string surname, string phone);
         void Edit(UserInfo oldElement, UserInfo editedElement);
         void Delete(string name, string surname);
+        bool TryLoad();
+        bool TrySave();
     }
 }

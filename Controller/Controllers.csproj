@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ControllerAbstraction\ControllerAndViewAbstraction.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 

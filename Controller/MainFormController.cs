@@ -1,19 +1,19 @@
-﻿using Models;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using Views;
+using Models;
+using ControllerAndViewAbstraction;
 
 namespace Controllers
 {
     /// <summary>
     /// Allows to review and edit list of users infromtaion
     /// </summary>
-    public class MainController : IController
+    public class MainFormController : IController
     {
         private readonly IModel model;
         private readonly IUserView view;
 
-        public MainController(IUserView view)
+        public MainFormController(IUserView view)
         {
             model = new Users();
             this.view = view;
@@ -24,7 +24,6 @@ namespace Controllers
             return model.GetAll();
         }
 
-
         public IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname)
         {
             return model.GetUser(name, surname);
@@ -33,9 +32,7 @@ namespace Controllers
         public UserInfo GetUserByPhone(string phone)
         {
             return model.GetUser(phone);
-        }
-
-        
+        }        
 
         /// <summary>
         /// Adds new user with values of name surname and phone
@@ -49,7 +46,17 @@ namespace Controllers
         {
             if (model.Exists(phone))
             {
-                return false;
+                view.textBox.AppendText(">This user already exists" + Environment.NewLine);
+            }
+
+            if (controller.AddUser(e.name, e.surname, e.phone))
+            {
+                textBox.AppendText(">New user was added" + Environment.NewLine);
+                GetUsers();
+            }
+            else
+            {
+                
             }
             model.Add(name, surname, phone);
             return true;
@@ -75,22 +82,31 @@ namespace Controllers
             return false;
         }
 
-        public bool LoadDB()
+        public void LoadDB()
         {
-            if (model is Users users)
-            {
-                return users.TryLoad();
-            }
-            return false;
+            //if (model is Users users)
+            //{
+            //    if(users.TryLoad())
+            //    {
+            //        if(view is )
+            //        view.TextBox.AppendText(">Users were successfully loaded from file." + Environment.NewLine);
+            //        GetUsers();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Problem happened during loading users",
+            //                        "Error",
+            //                        MessageBoxButtons.OK,
+            //                        MessageBoxIcon.Error,
+            //                        MessageBoxDefaultButton.Button1,
+            //                        MessageBoxOptions.DefaultDesktopOnly);
+            //    }
+            //}
         }
 
-        public bool SaveDB()
+        public void SaveDB()
         {
-            if (model is Users users)
-            {
-                return users.TrySave();
-            }
-            return false;
+            model.TrySave();
         }
     }
 }

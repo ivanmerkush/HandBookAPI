@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Controller\Controllers.csproj" />
-    <ProjectReference Include="..\Handbook\Views.csproj" />
+    <ProjectReference Include="..\DIContainer\DIContainer.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 

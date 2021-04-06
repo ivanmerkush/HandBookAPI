@@ -1,4 +1,4 @@
-﻿namespace Views
+﻿namespace ControllerAndViewAbstraction
 {
     /// <summary>
     /// Containts standart methods to work with list of users
