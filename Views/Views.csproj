@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ControllerAbstraction\ControllerAndViewAbstraction.csproj" />
-    <ProjectReference Include="..\DIContainer\DIContainer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interface\" />
+    <ProjectReference Include="..\Controller\Controllers.csproj" />
+    <ProjectReference Include="..\InterfacesLibrary\InterfacesLibrary.csproj" />
   </ItemGroup>
 
 </Project>

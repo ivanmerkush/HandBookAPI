@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models;
-using ControllerAndViewAbstraction;
+using InterfacesLibrary;
 
 namespace Controllers
 {
-    public class ConsoleController : IController
+    class ConsoleController : IController
     {
 
         private readonly IModel model;
         private readonly IUserView view;
 
-        public ConsoleController(IUserView view)
+        internal ConsoleController(IUserView view)
         {
             model = new Users();
             this.view = view;

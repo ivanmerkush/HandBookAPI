@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models;
-using ControllerAndViewAbstraction;
+using InterfacesLibrary;
 
 namespace Controllers
 {
     /// <summary>
     /// Allows to review and edit list of users infromtaion
     /// </summary>
-    public class MainFormController : IController
+    class MainFormController : IController
     {
         private readonly IModel model;
-        private readonly IUserView view;
+        private readonly IUserView view;   
 
-        public MainFormController(IUserView view)
+        internal MainFormController(IUserView view)
         {
             model = new Users();
             this.view = view;
@@ -44,20 +44,20 @@ namespace Controllers
         /// <returns></returns>
         public bool AddUser(string name, string surname, string phone)
         {
-            if (model.Exists(phone))
-            {
-                view.textBox.AppendText(">This user already exists" + Environment.NewLine);
-            }
+            //if (model.Exists(phone))
+            //{
+            //    view.textBox.AppendText(">This user already exists" + Environment.NewLine);
+            //}
 
-            if (controller.AddUser(e.name, e.surname, e.phone))
-            {
-                textBox.AppendText(">New user was added" + Environment.NewLine);
-                GetUsers();
-            }
-            else
-            {
-                
-            }
+            //if (controller.AddUser(e.name, e.surname, e.phone))
+            //{
+            //    textBox.AppendText(">New user was added" + Environment.NewLine);
+            //    GetUsers();
+            //}
+            //else
+            //{
+
+            //}
             model.Add(name, surname, phone);
             return true;
         }

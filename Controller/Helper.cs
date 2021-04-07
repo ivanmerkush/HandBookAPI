@@ -1,7 +1,6 @@
-﻿using Controllers;
-using ControllerAndViewAbstraction;
+﻿using InterfacesLibrary;
 
-namespace DIContainer
+namespace Controllers
 {
     public static class Helper
     {

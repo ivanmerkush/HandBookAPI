@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using DIContainer;
 using Models;
-using ControllerAndViewAbstraction;
+using InterfacesLibrary;
+using Controllers;
 
 namespace Views
 {

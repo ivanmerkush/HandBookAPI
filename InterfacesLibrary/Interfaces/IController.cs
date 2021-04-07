@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models;
 
-namespace ControllerAndViewAbstraction
+namespace InterfacesLibrary
 {
     public interface IController
     {
