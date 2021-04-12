@@ -2,26 +2,33 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using InterfacesLibrary;
 
 namespace WindowsFormsApp
 {
     partial class AddForm : Form
     {
-        internal event EventHandler<UserEventArgs> UserAdded;
+        private readonly IController controller;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
+        
+        private AddForm()
+        {
+            InitializeComponent();
+        }
 
-        internal AddForm()
+        internal AddForm(IController controller)
         {
             InitializeComponent();
             addButton.Enabled = false;
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
+            this.controller = controller;
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            UserAdded?.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            controller.AddUser(nameBox.Text, surnameBox.Text, phoneBox.Text);
             Close();
         }
 

@@ -3,36 +3,37 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Models;
+using InterfacesLibrary;
 
 namespace WindowsFormsApp
 {
     internal partial class EditForm : Form
     {
-        internal event EventHandler<UserEventArgs> UserEdited;
+        private readonly IController controller;
+        private readonly UserInfo oldUser;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
         
-        public EditForm()
+        private EditForm()
         {
             InitializeComponent();
-            phoneBox.Validating += PhoneValidating;
-            nameBox.Validating += NameValidating;
-            surnameBox.Validating += SurnameValidating;
         }
 
-        public EditForm(UserInfo userInfo)
+        public EditForm(UserInfo userInfo, IController controller)
         {
             InitializeComponent();
+            oldUser = userInfo;
             nameBox.Text = userInfo.Name;
             surnameBox.Text = userInfo.Surname;
             phoneBox.Text = userInfo.Phone;
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
+            this.controller = controller;
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            UserEdited?.Invoke(this, new UserEventArgs(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            controller.EditUser(oldUser, nameBox.Text, surnameBox.Text, phoneBox.Text);
             Close();
         }
 

@@ -17,17 +17,17 @@ namespace Controllers
             this.view = view;
         }
 
-        public bool AddUser(string name, string surname, string phone)
+        public void AddUser(string name, string surname, string phone)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteUser(string name, string surname)
+        public void DeleteUser(UserInfo userInfo)
         {
             throw new NotImplementedException();
         }
 
-        public bool EditUser(UserInfo user, string name, string surname, string phone)
+        public void EditUser(UserInfo user, string name, string surname, string phone)
         {
             throw new NotImplementedException();
         }

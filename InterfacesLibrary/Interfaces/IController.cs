@@ -8,9 +8,9 @@ namespace InterfacesLibrary
         IReadOnlyCollection<UserInfo> GetUsers();
         IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname);
         UserInfo GetUserByPhone(string phone);
-        bool AddUser(string name, string surname, string phone);
-        bool EditUser(UserInfo user, string name, string surname, string phone);
-        bool DeleteUser(string name, string surname);
+        void AddUser(string name, string surname, string phone);
+        void EditUser(UserInfo user, string name, string surname, string phone);
+        void DeleteUser(UserInfo userInfo);
         void LoadDB();
         void SaveDB();
     }

@@ -2,39 +2,51 @@
 using System.Linq;
 using System.Windows.Forms;
 using Models;
-using ControllerAndViewAbstraction;
-using DIContainer;
+using InterfacesLibrary;
+using Controllers;
 
 namespace WindowsFormsApp
 {
     public partial class UserForm : Form, IUserView
     {
-        internal readonly IController controller;
+
+        public IController Controller { get; }
+        public string MessageBoxText
+        {
+            set
+            {
+                MessageBox.Show(value,
+                "Message",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+        public string NotifierText
+        {
+            set
+            {
+                textBox.AppendText(value + Environment.NewLine);
+            }
+        }
 
         public UserForm()
         {
-            controller = Helper.GetMainFormController(this);
+            Controller = Helper.GetMainFormController(this);
             InitializeComponent();
         }
 
         public void AddUser()
         {
-            AddForm addForm = new AddForm();
-            addForm.UserAdded += AddEventHandler;
+            AddForm addForm = new AddForm(Controller);
             addForm.ShowDialog();
-            addForm.UserAdded -= AddEventHandler;
-
-        }
-
-        private void AddEventHandler(object sender, UserEventArgs e)
-        {
+            GetUsers();
         }
 
         public void DeleteUser()
         {
-            UserInfo user = (UserInfo) userList.SelectedItem;
-            controller.DeleteUser(user.Name, user.Surname);
-            textBox.AppendText(">User was deleted." + Environment.NewLine);
+            Controller.DeleteUser((UserInfo)userList.SelectedItem);
             GetUsers();
             editButton.Enabled = false;
             deleteButton.Enabled = false;
@@ -42,65 +54,34 @@ namespace WindowsFormsApp
 
         public void EditUser()
         {
-            EditForm editForm = new EditForm((UserInfo)userList.SelectedItem);
-            editForm.UserEdited += EditEventHandler;
+            EditForm editForm = new EditForm((UserInfo)userList.SelectedItem, Controller);
             editForm.ShowDialog();
-            editForm.UserEdited -= EditEventHandler;
             editButton.Enabled = false;
             deleteButton.Enabled = false;
-        }
-
-        private void EditEventHandler(object sender, UserEventArgs e)
-        {
-            if (controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
-            {
-                textBox.AppendText(">User was edited." + Environment.NewLine);
-                GetUsers();
-            }
-            else
-            {
-                textBox.AppendText(">Not unique attributes" + Environment.NewLine);
-            }
+            GetUsers();
         }
 
         public void GetUser()
         {
-            GetForm getForm = new GetForm()
-            {
-                Owner = this
-            };
+            GetForm getForm = new GetForm(Controller);
             getForm.ShowDialog();
         }
 
         public void GetUsers()
         {
             userList.Items.Clear();
-            userList.Items.AddRange(controller.GetUsers().ToArray());
+            userList.Items.AddRange(Controller.GetUsers().ToArray());
         }
 
         public void LoadDB()
         {
-            controller.LoadDB();
+            Controller.LoadDB();
             GetUsers();
-            
         }
 
         public void SaveDB()
         {
-            //if(controller.SaveDB())
-            //{
-            //    textBox.AppendText(">Users were successfully saved to file." + Environment.NewLine);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Problem happened during saving users",
-            //                    "Error",
-            //                    MessageBoxButtons.OK,
-            //                    MessageBoxIcon.Error,
-            //                    MessageBoxDefaultButton.Button1,
-            //                    MessageBoxOptions.DefaultDesktopOnly);
-            //}
-
+            Controller.SaveDB();
         }
 
         private void GetButton_Click(object sender, EventArgs e)
@@ -137,6 +118,18 @@ namespace WindowsFormsApp
         {
             editButton.Enabled = true;
             deleteButton.Enabled = true;
+        }
+
+        public void UnblockAddEdit()
+        {
+            editButton.Enabled = true;
+            deleteButton.Enabled = true;
+        }
+
+        public void BlockAddEdit()
+        {
+            editButton.Enabled = false;
+            deleteButton.Enabled = false;
         }
     }
 }

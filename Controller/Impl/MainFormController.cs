@@ -42,71 +42,66 @@ namespace Controllers
         /// <param name="surname"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public bool AddUser(string name, string surname, string phone)
+        public void AddUser(string name, string surname, string phone)
         {
-            //if (model.Exists(phone))
-            //{
-            //    view.textBox.AppendText(">This user already exists" + Environment.NewLine);
-            //}
-
-            //if (controller.AddUser(e.name, e.surname, e.phone))
-            //{
-            //    textBox.AppendText(">New user was added" + Environment.NewLine);
-            //    GetUsers();
-            //}
-            //else
-            //{
-
-            //}
-            model.Add(name, surname, phone);
-            return true;
+            if (model.Exists(phone))
+            {
+                view.NotifierText = ">This user already exists";
+            }
+            else
+            {
+                model.Add(name, surname, phone);
+                view.NotifierText = ">New user was added";
+            }
         }
 
-        public bool EditUser(UserInfo user, string name, string surname, string phone)
+        public void EditUser(UserInfo user, string name, string surname, string phone)
         {
             if (model.Exists(name, surname, phone))
             {
-                return false;
+                view.MessageBoxText = ">Not unique attributes";
             }
-            model.Edit(user, new UserInfo(name, surname, phone));
-            return true;
+            else
+            {
+                model.Edit(user, new UserInfo(name, surname, phone));
+            }
         }
 
-        public bool DeleteUser(string name, string surname)
+        public void DeleteUser(UserInfo userInfo)
         {
-            if (model.Exists(name, surname))
+            if (model.Exists(userInfo.Name, userInfo.Surname))
             {
-                model.Delete(name, surname);
-                return true;
+                model.Delete(userInfo.Name, userInfo.Surname);
+                view.NotifierText = ">User was deleted.";
             }
-            return false;
+            else
+            {
+                view.MessageBoxText = "Problem occuried during delete.";
+            }
         }
 
         public void LoadDB()
         {
-            //if (model is Users users)
-            //{
-            //    if(users.TryLoad())
-            //    {
-            //        if(view is )
-            //        view.TextBox.AppendText(">Users were successfully loaded from file." + Environment.NewLine);
-            //        GetUsers();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Problem happened during loading users",
-            //                        "Error",
-            //                        MessageBoxButtons.OK,
-            //                        MessageBoxIcon.Error,
-            //                        MessageBoxDefaultButton.Button1,
-            //                        MessageBoxOptions.DefaultDesktopOnly);
-            //    }
-            //}
+            if(model.TryLoad())
+            {
+                view.NotifierText = ">Users were successfully loaded from file.";
+            }
+            else
+            {
+                view.MessageBoxText = "Problem happened during loading users";
+            }
         }
 
         public void SaveDB()
         {
-            model.TrySave();
+            if(model.TrySave())
+            {
+                view.NotifierText = ">Users were successfully saved to file.";
+            }
+            else
+            {
+                view.MessageBoxText = "Problem happened during saving users";
+            }
         }
     }
 }

@@ -4,19 +4,26 @@ using System.Windows.Forms;
 using System.Linq;
 using Models;
 using System.ComponentModel;
+using InterfacesLibrary;
 
 namespace WindowsFormsApp
 {
     internal partial class GetForm : Form
     {
+        private readonly IController controller;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
-        public GetForm()
+        private GetForm()
         {
             InitializeComponent();
+        }
+
+        public GetForm(IController controller)
+        {
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
+            this.controller = controller;
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
@@ -25,11 +32,8 @@ namespace WindowsFormsApp
             {
                 usersBox.Items.Clear();
                 if (nameBox.Text != string.Empty && surnameBox.Text != string.Empty)
-                {
-                    if (Owner is UserForm userForm)
-                    {
-                        usersBox.Items.AddRange(userForm.Controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
-                    }
+                {       
+                    usersBox.Items.AddRange(controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
                 }
             }
             else
