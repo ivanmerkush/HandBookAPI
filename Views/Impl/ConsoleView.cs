@@ -9,12 +9,15 @@ namespace Views
 {
     sealed public class ConsoleView : IUserView
     {
-        private readonly IController controller;
+        public IController Controller { get; }
+        public string MessageBoxText { set => throw new NotImplementedException(); }
+        public string NotifierText { set => Console.WriteLine(value); }
+
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public ConsoleView()
         {
-            controller = Helper.GetConsoleController(this);
+            Controller = Helper.GetConsoleController(this);
         }
 
         public void Start()
@@ -68,7 +71,7 @@ namespace Views
             {
                 if(Regex.IsMatch(values[2], pattern))
                 {
-                    if (controller.AddUser(values[0], values[1], values[2]))
+                    if (Controller.AddUser(values[0], values[1], values[2]))
                     {
                         Console.WriteLine("User was added");
                     }
@@ -95,7 +98,7 @@ namespace Views
             }
             else
             {
-                if(controller.DeleteUser(values[0], values[1]))
+                if(Controller.DeleteUser(values[0], values[1]))
                 {
                     Console.WriteLine("User was deleted");
                 }
@@ -116,7 +119,7 @@ namespace Views
             }
             else
             {
-                IReadOnlyCollection<UserInfo> users = controller.GetUserByName(values[0], values[1]);
+                IReadOnlyCollection<UserInfo> users = Controller.GetUserByName(values[0], values[1]);
                 if (users.Count == 0)
                 {
                     Console.WriteLine("This user exists, type new name, surname and phone");
@@ -131,7 +134,7 @@ namespace Views
                         {
                             foreach (UserInfo userInfo in users)
                             {
-                                if (controller.EditUser(userInfo, values[0], values[1], values[2]))
+                                if (Controller.EditUser(userInfo, values[0], values[1], values[2]))
                                 {
                                     Console.WriteLine("User was edited");
                                 }
@@ -176,7 +179,7 @@ namespace Views
                         }
                         else
                         {
-                            foreach (UserInfo user in controller.GetUserByName(values[0], values[1]))
+                            foreach (UserInfo user in Controller.GetUserByName(values[0], values[1]))
                             {
                                 Console.WriteLine(user);
                             }
@@ -187,7 +190,7 @@ namespace Views
                         string phone = Console.ReadLine();
                         if (Regex.IsMatch(phone, pattern))
                         {
-                            Console.WriteLine(controller.GetUserByPhone(phone));
+                            Console.WriteLine(Controller.GetUserByPhone(phone));
                         }
                         break;
                     default:
@@ -199,7 +202,7 @@ namespace Views
 
         public void GetUsers()
         {
-            IReadOnlyCollection<UserInfo> list = controller.GetUsers();
+            IReadOnlyCollection<UserInfo> list = Controller.GetUsers();
             foreach(UserInfo user in list)
             {
                 Console.WriteLine(user);
@@ -208,12 +211,12 @@ namespace Views
 
         public void LoadDB()
         {
-            controller.LoadDB();
+            Controller.LoadDB();
         }
 
         public void SaveDB()
         {
-            controller.SaveDB();
+            Controller.SaveDB();
         }
 
         private void PrintMethods()

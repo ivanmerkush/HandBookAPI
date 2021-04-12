@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Controller\Controllers.csproj" />
+    <ProjectReference Include="..\InterfacesLibrary\InterfacesLibrary.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 

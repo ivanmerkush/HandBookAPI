@@ -2,18 +2,38 @@
 using System.Linq;
 using System.Windows.Forms;
 using Models;
-using ControllerAndViewAbstraction;
-using DIContainer;
+using InterfacesLibrary;
+using Controllers;
 
 namespace WindowsFormsApp
 {
     public partial class UserForm : Form, IUserView
     {
-        internal readonly IController controller;
+
+        public IController Controller { get; }
+        public string MessageBoxText
+        {
+            set
+            {
+                MessageBox.Show(value,
+                "Message",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+        public string NotifierText
+        {
+            set
+            {
+                textBox.AppendText(value + Environment.NewLine);
+            }
+        }
 
         public UserForm()
         {
-            controller = Helper.GetMainFormController(this);
+            Controller = Helper.GetMainFormController(this);
             InitializeComponent();
         }
 
@@ -33,7 +53,7 @@ namespace WindowsFormsApp
         public void DeleteUser()
         {
             UserInfo user = (UserInfo) userList.SelectedItem;
-            controller.DeleteUser(user.Name, user.Surname);
+            Controller.DeleteUser(user.Name, user.Surname);
             textBox.AppendText(">User was deleted." + Environment.NewLine);
             GetUsers();
             editButton.Enabled = false;
@@ -52,7 +72,7 @@ namespace WindowsFormsApp
 
         private void EditEventHandler(object sender, UserEventArgs e)
         {
-            if (controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
+            if (Controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
             {
                 textBox.AppendText(">User was edited." + Environment.NewLine);
                 GetUsers();
@@ -75,31 +95,19 @@ namespace WindowsFormsApp
         public void GetUsers()
         {
             userList.Items.Clear();
-            userList.Items.AddRange(controller.GetUsers().ToArray());
+            userList.Items.AddRange(Controller.GetUsers().ToArray());
         }
 
         public void LoadDB()
         {
-            controller.LoadDB();
+            Controller.LoadDB();
             GetUsers();
             
         }
 
         public void SaveDB()
         {
-            //if(controller.SaveDB())
-            //{
-            //    textBox.AppendText(">Users were successfully saved to file." + Environment.NewLine);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Problem happened during saving users",
-            //                    "Error",
-            //                    MessageBoxButtons.OK,
-            //                    MessageBoxIcon.Error,
-            //                    MessageBoxDefaultButton.Button1,
-            //                    MessageBoxOptions.DefaultDesktopOnly);
-            //}
+            Controller.SaveDB();
 
         }
 
