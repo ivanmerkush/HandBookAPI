@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Linq;
 using Models;
+using System.ComponentModel;
 
 namespace WindowsFormsApp
 {
@@ -13,6 +14,9 @@ namespace WindowsFormsApp
         public GetForm()
         {
             InitializeComponent();
+            phoneBox.Validating += PhoneValidating;
+            nameBox.Validating += NameValidating;
+            surnameBox.Validating += SurnameValidating;
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
@@ -24,7 +28,7 @@ namespace WindowsFormsApp
                 {
                     if (Owner is UserForm userForm)
                     {
-                        usersBox.Items.AddRange(userForm.controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
+                        usersBox.Items.AddRange(userForm.Controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
                     }
                 }
             }
@@ -35,7 +39,7 @@ namespace WindowsFormsApp
                 {
                     if (Owner is UserForm userForm)
                     {
-                        UserInfo user = userForm.controller.GetUserByPhone(phoneBox.Text);
+                        UserInfo user = userForm.Controller.GetUserByPhone(phoneBox.Text);
                         if (user != null)
                         {
                             userBox.Text = user.ToString();
@@ -65,6 +69,42 @@ namespace WindowsFormsApp
             if (!char.IsDigit(letter) && letter != 8)
             {
                 e.Handled = true;
+            }
+        }
+
+        private void NameValidating(object sender, CancelEventArgs e)
+        {
+            if(string.IsNullOrEmpty(nameBox.Text))
+            {
+                errorProvider1.SetError(nameBox, "No name specified");
+            }
+            else
+            {
+                errorProvider1.Clear();
+            }
+        }
+
+        private void SurnameValidating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(surnameBox.Text))
+            {
+                errorProvider1.SetError(surnameBox, "No surname specified");
+            }
+            else
+            {
+                errorProvider1.Clear();
+            }
+        }
+
+        private void PhoneValidating(object sender, CancelEventArgs e)
+        {
+            if(Regex.IsMatch(phoneBox.Text, pattern))
+            {
+                errorProvider1.Clear();
+            }
+            else
+            {
+                errorProvider1.SetError(phoneBox, "Phone number should look like 375XXXXXXXXX, where X is any digit.");
             }
         }
     }

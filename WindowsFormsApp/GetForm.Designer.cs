@@ -29,6 +29,7 @@ namespace WindowsFormsApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.pageName = new System.Windows.Forms.TabPage();
             this.usersBox = new System.Windows.Forms.ListBox();
@@ -40,9 +41,11 @@ namespace WindowsFormsApp
             this.userBox = new System.Windows.Forms.TextBox();
             this.phoneBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl1.SuspendLayout();
             this.pageName.SuspendLayout();
             this.pagePhone.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -91,7 +94,7 @@ namespace WindowsFormsApp
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(26, 64);
+            this.nameBox.Location = new System.Drawing.Point(12, 64);
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(190, 23);
             this.nameBox.TabIndex = 2;
@@ -110,7 +113,7 @@ namespace WindowsFormsApp
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(99, 38);
+            this.label1.Location = new System.Drawing.Point(88, 38);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 15);
             this.label1.TabIndex = 0;
@@ -154,6 +157,12 @@ namespace WindowsFormsApp
             this.label3.TabIndex = 0;
             this.label3.Text = "Phone";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkRate = 0;
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
+            // 
             // GetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -167,6 +176,7 @@ namespace WindowsFormsApp
             this.pageName.PerformLayout();
             this.pagePhone.ResumeLayout(false);
             this.pagePhone.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -184,5 +194,6 @@ namespace WindowsFormsApp
         private System.Windows.Forms.TextBox userBox;
         private System.Windows.Forms.TextBox phoneBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

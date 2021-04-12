@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -13,6 +14,9 @@ namespace WindowsFormsApp
         {
             InitializeComponent();
             addButton.Enabled = false;
+            phoneBox.Validating += PhoneValidating;
+            nameBox.Validating += NameValidating;
+            surnameBox.Validating += SurnameValidating;
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -54,6 +58,42 @@ namespace WindowsFormsApp
             else
             {
                 addButton.Enabled = true;
+            }
+        }
+
+        private void NameValidating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(nameBox.Text))
+            {
+                errorProvider1.SetError(nameBox, "No name specified");
+            }
+            else
+            {
+                errorProvider1.Clear();
+            }
+        }
+
+        private void SurnameValidating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(surnameBox.Text))
+            {
+                errorProvider1.SetError(surnameBox, "No surname specified");
+            }
+            else
+            {
+                errorProvider1.Clear();
+            }
+        }
+
+        private void PhoneValidating(object sender, CancelEventArgs e)
+        {
+            if (Regex.IsMatch(phoneBox.Text, pattern))
+            {
+                errorProvider1.Clear();
+            }
+            else
+            {
+                errorProvider1.SetError(phoneBox, "Phone number should look like 375XXXXXXXXX, where X is any digit.");
             }
         }
     }
