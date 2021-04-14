@@ -31,6 +31,27 @@ namespace WindowsFormsApp
             }
         }
 
+        public IController Controller { get; }
+        public string MessageBoxText
+        {
+            set
+            {
+                MessageBox.Show(value,
+                "Message",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+        public string NotifierText
+        {
+            set
+            {
+                textBox.AppendText(value + Environment.NewLine);
+            }
+        }
+
         public UserForm()
         {
             Controller = Helper.GetMainFormController(this);
@@ -46,7 +67,9 @@ namespace WindowsFormsApp
 
         public void DeleteUser()
         {
-            Controller.DeleteUser((UserInfo)userList.SelectedItem);
+            UserInfo user = (UserInfo) userList.SelectedItem;
+            Controller.DeleteUser(user.Name, user.Surname);
+            textBox.AppendText(">User was deleted." + Environment.NewLine);
             GetUsers();
             editButton.Enabled = false;
             deleteButton.Enabled = false;
@@ -58,7 +81,19 @@ namespace WindowsFormsApp
             editForm.ShowDialog();
             editButton.Enabled = false;
             deleteButton.Enabled = false;
-            GetUsers();
+        }
+
+        private void EditEventHandler(object sender, UserEventArgs e)
+        {
+            if (Controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
+            {
+                textBox.AppendText(">User was edited." + Environment.NewLine);
+                GetUsers();
+            }
+            else
+            {
+                textBox.AppendText(">Not unique attributes" + Environment.NewLine);
+            }
         }
 
         public void GetUser()
@@ -82,6 +117,7 @@ namespace WindowsFormsApp
         public void SaveDB()
         {
             Controller.SaveDB();
+
         }
 
         private void GetButton_Click(object sender, EventArgs e)
