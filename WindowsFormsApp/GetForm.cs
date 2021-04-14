@@ -41,18 +41,18 @@ namespace WindowsFormsApp
                 userBox.Clear();
                 if (Regex.IsMatch(phoneBox.Text, pattern))
                 {
-                    if (Owner is UserForm userForm)
-                    {
-                        UserInfo user = userForm.Controller.GetUserByPhone(phoneBox.Text);
-                        if (user != null)
-                        {
-                            userBox.Text = user.ToString();
-                        }
-                        else
-                        {
-                            userBox.Text = "Not found";
-                        }
-                    }
+                    //if (Owner is UserForm userForm)
+                    //{
+                    //    UserInfo user = userForm.Controller.GetUserByPhone(phoneBox.Text);
+                    //    if (user != null)
+                    //    {
+                    //        userBox.Text = user.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        userBox.Text = "Not found";
+                    //    }
+                    //}
                 }
             }
         }

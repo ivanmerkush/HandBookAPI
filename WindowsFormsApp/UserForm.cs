@@ -9,28 +9,6 @@ namespace WindowsFormsApp
 {
     public partial class UserForm : Form, IUserView
     {
-
-        public IController Controller { get; }
-        public string MessageBoxText
-        {
-            set
-            {
-                MessageBox.Show(value,
-                "Message",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1,
-                MessageBoxOptions.DefaultDesktopOnly);
-            }
-        }
-        public string NotifierText
-        {
-            set
-            {
-                textBox.AppendText(value + Environment.NewLine);
-            }
-        }
-
         public IController Controller { get; }
         public string MessageBoxText
         {
@@ -68,7 +46,7 @@ namespace WindowsFormsApp
         public void DeleteUser()
         {
             UserInfo user = (UserInfo) userList.SelectedItem;
-            Controller.DeleteUser(user.Name, user.Surname);
+            Controller.DeleteUser(user);
             textBox.AppendText(">User was deleted." + Environment.NewLine);
             GetUsers();
             editButton.Enabled = false;
@@ -81,19 +59,6 @@ namespace WindowsFormsApp
             editForm.ShowDialog();
             editButton.Enabled = false;
             deleteButton.Enabled = false;
-        }
-
-        private void EditEventHandler(object sender, UserEventArgs e)
-        {
-            if (Controller.EditUser((UserInfo)userList.SelectedItem, e.name, e.surname, e.phone))
-            {
-                textBox.AppendText(">User was edited." + Environment.NewLine);
-                GetUsers();
-            }
-            else
-            {
-                textBox.AppendText(">Not unique attributes" + Environment.NewLine);
-            }
         }
 
         public void GetUser()
