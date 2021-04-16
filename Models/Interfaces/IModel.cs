@@ -10,7 +10,7 @@ namespace Models
         bool Exists(string phone);
         bool Exists(string name, string surname);
         bool Exists(string name, string surname, string phone);
-        UserInfo Add(string name, string surname, string phone);
+        void Add(UserInfo user);
         void Edit(UserInfo oldElement, UserInfo editedElement);
         void Delete(string name, string surname);
         bool TryLoad();

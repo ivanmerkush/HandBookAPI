@@ -9,6 +9,8 @@ namespace WindowsFormsApp
 {
     public partial class UserForm : Form, IUserView
     {
+        private bool isEditingVisible;
+
         public IController Controller { get; }
         public string MessageBoxText
         {
@@ -28,6 +30,20 @@ namespace WindowsFormsApp
             {
                 textBox.AppendText(value + Environment.NewLine);
             }
+        }
+        public bool EditingVisible 
+        {
+            get => isEditingVisible; 
+            set
+            {
+                isEditingVisible = value;
+                editButton.Enabled = isEditingVisible;
+                deleteButton.Enabled = isEditingVisible;
+            }
+        }
+        public UserInfo SelectedUser
+        {
+            get => userList.SelectedItem as UserInfo;
         }
 
         public UserForm()
@@ -49,16 +65,12 @@ namespace WindowsFormsApp
             Controller.DeleteUser(user);
             textBox.AppendText(">User was deleted." + Environment.NewLine);
             GetUsers();
-            editButton.Enabled = false;
-            deleteButton.Enabled = false;
         }
 
         public void EditUser()
         {
             EditForm editForm = new EditForm((UserInfo)userList.SelectedItem, Controller);
             editForm.ShowDialog();
-            editButton.Enabled = false;
-            deleteButton.Enabled = false;
         }
 
         public void GetUser()
@@ -82,7 +94,6 @@ namespace WindowsFormsApp
         public void SaveDB()
         {
             Controller.SaveDB();
-
         }
 
         private void GetButton_Click(object sender, EventArgs e)
@@ -117,20 +128,7 @@ namespace WindowsFormsApp
 
         private void UserList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editButton.Enabled = true;
-            deleteButton.Enabled = true;
-        }
-
-        public void UnblockAddEdit()
-        {
-            editButton.Enabled = true;
-            deleteButton.Enabled = true;
-        }
-
-        public void BlockAddEdit()
-        {
-            editButton.Enabled = false;
-            deleteButton.Enabled = false;
+            EditingVisible = true;
         }
     }
 }

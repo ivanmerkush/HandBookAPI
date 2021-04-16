@@ -10,28 +10,28 @@ namespace Controllers
     /// </summary>
     class MainFormController : IController
     {
-        private readonly IModel model;
-        private readonly IUserView view;   
+        public IModel Model { get; }
+        public IUserView View { get; }
 
         internal MainFormController(IUserView view)
         {
-            model = new Users();
-            this.view = view;
+            Model = new Users();
+            View = view;
         }
 
         public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            return model.GetAll();
+            return Model.GetAll();
         }
 
         public IReadOnlyCollection<UserInfo> GetUserByName(string name, string surname)
         {
-            return model.GetUser(name, surname);
+            return Model.GetUser(name, surname);
         }
 
         public UserInfo GetUserByPhone(string phone)
         {
-            return model.GetUser(phone);
+            return Model.GetUser(phone);
         }        
 
         /// <summary>
@@ -42,65 +42,83 @@ namespace Controllers
         /// <param name="surname"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public void AddUser(string name, string surname, string phone)
+        public void AddUser(UserInfo user)
         {
-            if (model.Exists(phone))
+            if (Model.Exists(user.Phone))
             {
-                view.NotifierText = ">This user already exists";
+                View.NotifierText = ">This user already exists";
             }
             else
             {
-                model.Add(name, surname, phone);
-                view.NotifierText = ">New user was added";
+                Model.Add(user);
+                View.NotifierText = ">New user was added";
             }
         }
 
-        public void EditUser(UserInfo user, string name, string surname, string phone)
+        public void EditUser(UserInfo oldUser, UserInfo newUser)
         {
-            if (model.Exists(name, surname, phone))
+            if (View.SelectedUser == null)
             {
-                view.MessageBoxText = ">Not unique attributes";
-            }
+                View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
+            } 
             else
             {
-                model.Edit(user, new UserInfo(name, surname, phone));
+                if (Model.Exists(newUser.Name, newUser.Surname, newUser.Phone))
+                {
+                    View.MessageBoxText = "Not unique attributes";
+                }
+                else
+                {
+                    Model.Edit(oldUser, newUser);
+                    View.EditingVisible = false;
+                }
             }
         }
 
         public void DeleteUser(UserInfo userInfo)
         {
-            if (model.Exists(userInfo.Name, userInfo.Surname))
+
+            if (View.SelectedUser == null)
             {
-                model.Delete(userInfo.Name, userInfo.Surname);
-                view.NotifierText = ">User was deleted.";
+                View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
             }
             else
             {
-                view.MessageBoxText = "Problem occuried during delete.";
+                if (Model.Exists(userInfo.Name, userInfo.Surname))
+                {
+                    Model.Delete(userInfo.Name, userInfo.Surname);
+                    View.NotifierText = ">User was deleted.";
+                    View.EditingVisible = false;
+                }
+                else
+                {
+                    View.MessageBoxText = "Problem occuried during delete.";
+                }
             }
         }
 
         public void LoadDB()
         {
-            if(model.TryLoad())
+            if(Model.TryLoad())
             {
-                view.NotifierText = ">Users were successfully loaded from file.";
+                View.NotifierText = ">Users were successfully loaded from file.";
+                View.EditingVisible = false;
             }
             else
             {
-                view.MessageBoxText = "Problem happened during loading users";
+                View.MessageBoxText = "Problem happened during loading users";
             }
         }
 
         public void SaveDB()
         {
-            if(model.TrySave())
+            if(Model.TrySave())
             {
-                view.NotifierText = ">Users were successfully saved to file.";
+                View.NotifierText = ">Users were successfully saved to file.";
             }
             else
             {
-                view.MessageBoxText = "Problem happened during saving users";
+                View.MessageBoxText = "Problem happened during saving users";
             }
         }
     }

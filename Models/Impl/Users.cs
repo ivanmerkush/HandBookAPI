@@ -82,11 +82,9 @@ namespace Models
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <param name="phone"></param>
-        public UserInfo Add(string name, string surname, string phone)
+        public void Add(UserInfo userInfo)
         {
-            UserInfo userInfo = new UserInfo(name, surname, phone);
             userList.Add(userInfo);
-            return userInfo;
         }
 
         /// <summary>

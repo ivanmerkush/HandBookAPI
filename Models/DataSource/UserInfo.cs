@@ -8,6 +8,11 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
+        private static int id = 1;
+
+        [JsonIgnore]
+        public int Id { get; }
+
         [JsonPropertyName("Name")]
         public string Name { get; set; }
         [JsonPropertyName("Surname")]
@@ -17,17 +22,18 @@ namespace Models
 
         internal UserInfo()
         {
-
+            Id = id++;
         }
 
         public UserInfo(string name, string surname, string phone)
         {
+            Id = id++;
             Name = name;
             Surname = surname;
             Phone = phone;
         }
 
-        public override string ToString() => string.Join(" ", Name, Surname, Phone);
+        public override string ToString() => string.Join(" ", Id, Name, Surname, Phone);
 
         public override bool Equals(object obj)
         {

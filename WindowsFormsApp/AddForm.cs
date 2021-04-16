@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using InterfacesLibrary;
+using Models;
 
 namespace WindowsFormsApp
 {
@@ -28,7 +29,7 @@ namespace WindowsFormsApp
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            controller.AddUser(nameBox.Text, surnameBox.Text, phoneBox.Text);
+            controller.AddUser(new UserInfo(nameBox.Text, surnameBox.Text, phoneBox.Text));
             Close();
         }
 

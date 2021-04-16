@@ -8,16 +8,16 @@ namespace Controllers
     class ConsoleController : IController
     {
 
-        private readonly IModel model;
-        private readonly IUserView view;
+        public IModel Model { get; }
+        public IUserView View { get; }
 
         internal ConsoleController(IUserView view)
         {
-            model = new Users();
-            this.view = view;
+            Model = new Users();
+            View = view;
         }
 
-        public void AddUser(string name, string surname, string phone)
+        public void AddUser(UserInfo user)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace Controllers
             throw new NotImplementedException();
         }
 
-        public void EditUser(UserInfo user, string name, string surname, string phone)
+        public void EditUser(UserInfo oldUser, UserInfo newUser)
         {
             throw new NotImplementedException();
         }

@@ -33,7 +33,7 @@ namespace WindowsFormsApp
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            controller.EditUser(oldUser, nameBox.Text, surnameBox.Text, phoneBox.Text);
+            controller.EditUser(oldUser, new UserInfo(nameBox.Text, surnameBox.Text, phoneBox.Text));
             Close();
         }
 

@@ -13,6 +13,14 @@ namespace Views
         public string MessageBoxText { set => Console.WriteLine(value); }
         public string NotifierText { set => Console.WriteLine(value); }
 
+        public UserInfo SelectedUser => throw new NotImplementedException();
+
+        public bool EditingVisible 
+        { 
+            get => throw new NotImplementedException(); 
+            set => throw new NotImplementedException(); 
+        }
+
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public ConsoleView()

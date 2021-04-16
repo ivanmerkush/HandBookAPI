@@ -1,4 +1,6 @@
-﻿namespace InterfacesLibrary
+﻿using Models;
+
+namespace InterfacesLibrary
 {
     /// <summary>
     /// Containts standart methods to work with list of users
@@ -8,6 +10,9 @@
         IController Controller { get; }
         string MessageBoxText { set; }
         string NotifierText { set; }
+        UserInfo SelectedUser { get; }
+        bool EditingVisible { get; set; }
+
         void GetUsers();
         void GetUser();
         void AddUser();
