@@ -157,7 +157,7 @@ namespace WindowsFormsApp
 
         public void Execute()
         {
-            if (oldUser == null)
+            if (oldUser != null)
             {
                 SideController.ExecuteOperation(new UserInfo(oldUser.Id, nameBox.Text, surnameBox.Text, phoneBox.Text));
             }

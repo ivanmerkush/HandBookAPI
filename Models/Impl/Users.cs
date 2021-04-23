@@ -118,6 +118,10 @@ namespace Models
             {
                 return false;
             }
+            catch(FileNotFoundException)
+            {
+                return false;
+            }
             return true;
         }
 
