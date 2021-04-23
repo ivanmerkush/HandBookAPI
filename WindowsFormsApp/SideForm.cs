@@ -3,22 +3,58 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Models;
-using InterfacesLibrary;
+using InterfacesLibrary.Interfaces.Controllers;
+using InterfacesLibrary.Interfaces.Views;
+using Controllers;
+using WindowsFormsApp.Enums;
 
 namespace WindowsFormsApp
 {
-    internal partial class EditForm : Form
+    internal partial class SideForm : Form, ISideView
     {
-        private readonly IController controller;
+        private readonly IUserView mainView;
         private readonly UserInfo oldUser;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
-        
-        private EditForm()
+
+        public string ButtonText { set => executeButton.Text = value; }
+        public ISideController SideController { get; }
+        public string MessageBoxText 
+        { 
+            set => mainView.MessageBoxText = value;
+        }
+        public string NotifierText { set => mainView.NotifierText = value; }
+        public bool EditingVisible 
+        { 
+            get => mainView.EditingVisible; 
+            set => mainView.EditingVisible = value; 
+        }
+
+        private SideForm()
         {
             InitializeComponent();
         }
 
-        public EditForm(UserInfo userInfo, IController controller)
+        public SideForm(IUserView view, Operations operation)
+        {
+            InitializeComponent();
+            phoneBox.Validating += PhoneValidating;
+            nameBox.Validating += NameValidating;
+            surnameBox.Validating += SurnameValidating;
+            mainView = view;
+            if (operation == Operations.ADD)
+            {
+                SideController = Helper.GetAddFormController(this);
+            }
+            else
+            {
+                if(operation == Operations.EDIT)
+                {
+                    SideController = Helper.GetEditFormController(this);
+                }
+            }
+        }
+
+        public SideForm(IUserView view, UserInfo userInfo, Operations operation)
         {
             InitializeComponent();
             oldUser = userInfo;
@@ -28,12 +64,22 @@ namespace WindowsFormsApp
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
-            this.controller = controller;
+            mainView = view;
+            if (operation == Operations.ADD)
+            {
+                SideController = Helper.GetAddFormController(this);
+                executeButton.Text = "Add";
+            }
+            else
+            {
+                SideController = Helper.GetEditFormController(this);
+                executeButton.Text = "Edit";
+            }
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            controller.EditUser(oldUser, new UserInfo(nameBox.Text, surnameBox.Text, phoneBox.Text));
+            Execute();
             Close();
         }
 
@@ -65,11 +111,11 @@ namespace WindowsFormsApp
         {
             if (nameBox.Text == string.Empty || surnameBox.Text == string.Empty || !Regex.IsMatch(phoneBox.Text, pattern))
             {
-                editButton.Enabled = false;
+                executeButton.Enabled = false;
             }
             else
             {
-                editButton.Enabled = true;
+                executeButton.Enabled = true;
             }
         }
 
@@ -106,6 +152,18 @@ namespace WindowsFormsApp
             else
             {
                 errorProvider1.SetError(phoneBox, "Phone number should look like 375XXXXXXXXX, where X is any digit.");
+            }
+        }
+
+        public void Execute()
+        {
+            if (oldUser == null)
+            {
+                SideController.ExecuteOperation(new UserInfo(oldUser.Id, nameBox.Text, surnameBox.Text, phoneBox.Text));
+            }
+            else
+            {
+                SideController.ExecuteOperation(new UserInfo(nameBox.Text, surnameBox.Text, phoneBox.Text));
             }
         }
     }

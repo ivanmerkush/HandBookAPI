@@ -8,23 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Xpo" Version="20.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Controller\Controllers.csproj" />
     <ProjectReference Include="..\InterfacesLibrary\InterfacesLibrary.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AddForm.cs">
+    <Compile Update="SideForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="AddForm.Designer.cs">
-      <DependentUpon>AddForm.cs</DependentUpon>
-    </Compile>
-    <Compile Update="EditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="EditForm.Designer.cs">
-      <DependentUpon>EditForm.cs</DependentUpon>
+    <Compile Update="SideForm.Designer.cs">
+      <DependentUpon>SideForm.cs</DependentUpon>
     </Compile>
     <Compile Update="UserForm.cs">
       <SubType>Form</SubType>
@@ -35,11 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AddForm.resx">
-      <DependentUpon>AddForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="EditForm.resx">
-      <DependentUpon>EditForm.cs</DependentUpon>
+    <EmbeddedResource Update="SideForm.resx">
+      <DependentUpon>SideForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="UserForm.resx">
       <DependentUpon>UserForm.cs</DependentUpon>

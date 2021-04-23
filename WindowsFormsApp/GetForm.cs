@@ -4,26 +4,26 @@ using System.Windows.Forms;
 using System.Linq;
 using Models;
 using System.ComponentModel;
-using InterfacesLibrary;
+using InterfacesLibrary.Interfaces.Controllers;
+using InterfacesLibrary.Interfaces.Views;
+using Controllers;
 
 namespace WindowsFormsApp
 {
-    internal partial class GetForm : Form
+    internal partial class GetForm : Form, IGetView
     {
-        private readonly IController controller;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
-        private GetForm()
+        public IInfoController InfoController { get; }
+        public string PhoneText { set => userBox.Text = value; }
+
+        public GetForm()
         {
             InitializeComponent();
-        }
-
-        public GetForm(IController controller)
-        {
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
-            this.controller = controller;
+            InfoController = Helper.GetInfoController(this);
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
@@ -32,28 +32,21 @@ namespace WindowsFormsApp
             {
                 usersBox.Items.Clear();
                 if (nameBox.Text != string.Empty && surnameBox.Text != string.Empty)
-                {       
-                    usersBox.Items.AddRange(controller.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
+                {
+                    usersBox.Items.AddRange(InfoController.GetUserByName(nameBox.Text, surnameBox.Text).ToArray());
                 }
             }
             else
             {
-                userBox.Clear();
-                if (Regex.IsMatch(phoneBox.Text, pattern))
+                if (tabControl1.SelectedTab == pagePhone)
                 {
-                    //if (Owner is UserForm userForm)
-                    //{
-                    //    UserInfo user = userForm.Controller.GetUserByPhone(phoneBox.Text);
-                    //    if (user != null)
-                    //    {
-                    //        userBox.Text = user.ToString();
-                    //    }
-                    //    else
-                    //    {
-                    //        userBox.Text = "Not found";
-                    //    }
-                    //}
+                    userBox.Clear();
+                    if (Regex.IsMatch(phoneBox.Text, pattern))
+                    {
+                        userBox.Text = InfoController.GetUserByPhone(phoneBox.Text).ToString();
+                    }
                 }
+
             }
         }
 

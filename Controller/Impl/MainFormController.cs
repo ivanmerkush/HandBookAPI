@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models;
-using InterfacesLibrary;
+using InterfacesLibrary.Interfaces.Controllers;
+using InterfacesLibrary.Interfaces.Views;
 
-namespace Controllers
+namespace Controllers.Impl
 {
     /// <summary>
     /// Allows to review and edit list of users infromtaion
@@ -15,7 +16,7 @@ namespace Controllers
 
         internal MainFormController(IUserView view)
         {
-            Model = new Users();
+            Model = Users.Instance;
             View = view;
         }
 
@@ -46,7 +47,7 @@ namespace Controllers
         {
             if (Model.Exists(user.Phone))
             {
-                View.NotifierText = ">This user already exists";
+                View.MessageBoxText = "This user already exists";
             }
             else
             {
@@ -55,21 +56,22 @@ namespace Controllers
             }
         }
 
-        public void EditUser(UserInfo oldUser, UserInfo newUser)
+        public void EditUser(UserInfo editedUser)
         {
-            if (View.SelectedUser == null)
+            if (editedUser == null)
             {
                 View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
             } 
             else
             {
-                if (Model.Exists(newUser.Name, newUser.Surname, newUser.Phone))
+                if (Model.Exists(editedUser.Name, editedUser.Surname, editedUser.Phone))
                 {
                     View.MessageBoxText = "Not unique attributes";
                 }
                 else
                 {
-                    Model.Edit(oldUser, newUser);
+                    View.NotifierText = ">User was edited.";
+                    Model.Edit(editedUser);
                     View.EditingVisible = false;
                 }
             }
@@ -77,8 +79,7 @@ namespace Controllers
 
         public void DeleteUser(UserInfo userInfo)
         {
-
-            if (View.SelectedUser == null)
+            if (userInfo == null)
             {
                 View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
             }

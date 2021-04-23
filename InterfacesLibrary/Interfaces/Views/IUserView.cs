@@ -1,6 +1,7 @@
 ﻿using Models;
+using InterfacesLibrary.Interfaces.Controllers;
 
-namespace InterfacesLibrary
+namespace InterfacesLibrary.Interfaces.Views
 {
     /// <summary>
     /// Containts standart methods to work with list of users
@@ -10,7 +11,6 @@ namespace InterfacesLibrary
         IController Controller { get; }
         string MessageBoxText { set; }
         string NotifierText { set; }
-        UserInfo SelectedUser { get; }
         bool EditingVisible { get; set; }
 
         void GetUsers();

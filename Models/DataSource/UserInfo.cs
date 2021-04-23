@@ -8,11 +8,10 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
-        private static int id = 1;
+        internal static int id = 1;
 
-        [JsonIgnore]
-        public int Id { get; }
-
+        [JsonPropertyName("Id")]
+        public int Id { get; set; }
         [JsonPropertyName("Name")]
         public string Name { get; set; }
         [JsonPropertyName("Surname")]
@@ -22,12 +21,20 @@ namespace Models
 
         internal UserInfo()
         {
-            Id = id++;
+            id++;
         }
 
         public UserInfo(string name, string surname, string phone)
         {
             Id = id++;
+            Name = name;
+            Surname = surname;
+            Phone = phone;
+        }
+
+        public UserInfo(int id, string name, string surname, string phone)
+        {
+            Id = id;
             Name = name;
             Surname = surname;
             Phone = phone;
@@ -39,12 +46,13 @@ namespace Models
         {
             return obj is UserInfo info &&
                    Name == info.Name &&
-                   Surname == info.Surname;
+                   Surname == info.Surname &&
+                   Phone == info.Phone;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name, Surname);
+            return HashCode.Combine(Name, Surname, Phone);
         }
     }
 }

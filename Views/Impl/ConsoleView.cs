@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Models;
-using InterfacesLibrary;
+using InterfacesLibrary.Interfaces.Controllers;
+using InterfacesLibrary.Interfaces.Views;
 using Controllers;
 
 namespace Views
@@ -13,12 +14,10 @@ namespace Views
         public string MessageBoxText { set => Console.WriteLine(value); }
         public string NotifierText { set => Console.WriteLine(value); }
 
-        public UserInfo SelectedUser => throw new NotImplementedException();
-
         public bool EditingVisible 
-        { 
-            get => throw new NotImplementedException(); 
-            set => throw new NotImplementedException(); 
+        {
+            get; 
+            set; 
         }
 
         private readonly string pattern = @"\b^(375)+\d{9}\b";
@@ -79,14 +78,7 @@ namespace Views
             {
                 if(Regex.IsMatch(values[2], pattern))
                 {
-                    //if (Controller.AddUser(values[0], values[1], values[2]))
-                    //{
-                    //    Console.WriteLine("User was added");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("This user already exists");
-                    //}
+                    Controller.AddUser(new UserInfo(values[0], values[1], values[2]));
                 }
                 else
                 {
@@ -106,14 +98,7 @@ namespace Views
             }
             else
             {
-                //if(Controller.DeleteUser(new UserInfo(values[0], values[1], string.Empty()))
-                //{
-                //    Console.WriteLine("User was deleted");
-                //}
-                //else
-                //{
-                //    Console.WriteLine("This user doesn't exists");
-                //}
+                Controller.DeleteUser(new UserInfo(values[0], values[1], string.Empty));
             }
         }
 
@@ -142,14 +127,7 @@ namespace Views
                         {
                             foreach (UserInfo userInfo in users)
                             {
-                                //if (Controller.EditUser(userInfo, values[0], values[1], values[2]))
-                                //{
-                                //    Console.WriteLine("User was edited");
-                                //}
-                                //else
-                                //{
-                                //    Console.WriteLine("User with this values already exists");
-                                //}
+                                Controller.EditUser(new UserInfo(userInfo.Id, values[0], values[1], values[2]));
                             }
                         }
                         else
@@ -240,5 +218,6 @@ namespace Views
                 "7)Save Users;" + Environment.NewLine +
                 "8)Exit;");
         }
+
     }
 }

@@ -10,9 +10,16 @@ namespace Models
     /// </summary>
     public class Users : IModel
     {
+        private static Users instance;
+
         private readonly List<UserInfo> userList;
 
-        public Users()
+        public static IModel Instance
+        {
+            get => instance ??= new Users();
+        }
+
+        private Users()
         {
             userList = new List<UserInfo>();
         }
@@ -68,20 +75,17 @@ namespace Models
         /// Edits information about some user
         /// </summary>
         /// <param name="oldUser"></param>
-        /// <param name="newValue"></param>
-        /// <param name="parameter"></param>
-        public void Edit(UserInfo oldUser, UserInfo newUser)
+        /// <param name="newUser"></param>
+        public void Edit(UserInfo editedUser)
         {
-            int index = userList.FindIndex(user => user.Equals(oldUser) && user.Phone == oldUser.Phone); 
-            userList[index] = newUser;
+            int index = userList.FindIndex(user => user.Id == editedUser.Id); 
+            userList[index] = editedUser;
         }
 
         /// <summary>
         /// Adds user to the list, if there are no duplicates
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <param name="phone"></param>
+        /// <param name="userInfo"></param>
         public void Add(UserInfo userInfo)
         {
             userList.Add(userInfo);
@@ -104,6 +108,7 @@ namespace Models
         {
             try
             {
+                UserInfo.id = 1;
                 userList.Clear();
                 string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.json");
                 string jsonString = File.ReadAllText(path);

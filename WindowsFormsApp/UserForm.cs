@@ -2,11 +2,13 @@
 using System.Linq;
 using System.Windows.Forms;
 using Models;
-using InterfacesLibrary;
+using InterfacesLibrary.Interfaces.Controllers;
+using InterfacesLibrary.Interfaces.Views;
 using Controllers;
 
 namespace WindowsFormsApp
 {
+    using Enums;
     public partial class UserForm : Form, IUserView
     {
         private bool isEditingVisible;
@@ -41,10 +43,6 @@ namespace WindowsFormsApp
                 deleteButton.Enabled = isEditingVisible;
             }
         }
-        public UserInfo SelectedUser
-        {
-            get => userList.SelectedItem as UserInfo;
-        }
 
         public UserForm()
         {
@@ -54,7 +52,7 @@ namespace WindowsFormsApp
 
         public void AddUser()
         {
-            AddForm addForm = new AddForm(Controller);
+            Form addForm = new SideForm(this, Operations.ADD);
             addForm.ShowDialog();
             GetUsers();
         }
@@ -63,19 +61,19 @@ namespace WindowsFormsApp
         {
             UserInfo user = (UserInfo) userList.SelectedItem;
             Controller.DeleteUser(user);
-            textBox.AppendText(">User was deleted." + Environment.NewLine);
             GetUsers();
         }
 
         public void EditUser()
         {
-            EditForm editForm = new EditForm((UserInfo)userList.SelectedItem, Controller);
+            Form editForm = new SideForm(this, (UserInfo)userList.SelectedItem, Operations.EDIT);
             editForm.ShowDialog();
+            GetUsers();
         }
 
         public void GetUser()
         {
-            GetForm getForm = new GetForm(Controller);
+            Form getForm = new GetForm();
             getForm.ShowDialog();
         }
 

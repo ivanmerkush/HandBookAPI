@@ -1,7 +1,7 @@
 ﻿
 namespace WindowsFormsApp
 {
-    partial class AddForm
+    partial class SideForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@ namespace WindowsFormsApp
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.phoneBox = new System.Windows.Forms.TextBox();
-            this.addButton = new System.Windows.Forms.Button();
+            this.executeButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -102,16 +102,16 @@ namespace WindowsFormsApp
             this.phoneBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
             this.phoneBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneBox_KeyPress);
             // 
-            // addButton
+            // executeButton
             // 
-            this.addButton.Location = new System.Drawing.Point(354, 46);
-            this.addButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(134, 35);
-            this.addButton.TabIndex = 6;
-            this.addButton.Text = "Add";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
+            this.executeButton.Location = new System.Drawing.Point(354, 46);
+            this.executeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.executeButton.Name = "executeButton";
+            this.executeButton.Size = new System.Drawing.Size(134, 35);
+            this.executeButton.TabIndex = 6;
+            this.executeButton.Text = "Execute";
+            this.executeButton.UseVisualStyleBackColor = true;
+            this.executeButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // cancelButton
             // 
@@ -129,14 +129,14 @@ namespace WindowsFormsApp
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
             // 
-            // AddForm
+            // EditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 197);
             this.ControlBox = false;
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.addButton);
+            this.Controls.Add(this.executeButton);
             this.Controls.Add(this.phoneBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -144,8 +144,8 @@ namespace WindowsFormsApp
             this.Controls.Add(this.surnameBox);
             this.Controls.Add(this.nameBox);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "AddForm";
-            this.Text = "AddForm";
+            this.Name = "EditForm";
+            this.Text = "EditForm";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -160,7 +160,7 @@ namespace WindowsFormsApp
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox phoneBox;
-        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button executeButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ErrorProvider errorProvider1;
     }

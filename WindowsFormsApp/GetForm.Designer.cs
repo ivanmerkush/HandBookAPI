@@ -134,6 +134,7 @@ namespace WindowsFormsApp
             // 
             // userBox
             // 
+            this.userBox.Enabled = false;
             this.userBox.Location = new System.Drawing.Point(34, 164);
             this.userBox.Name = "userBox";
             this.userBox.Size = new System.Drawing.Size(372, 23);
