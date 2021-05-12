@@ -12,9 +12,9 @@ namespace Controllers.Impl
         public IModel Model { get; }
         public IGetView View { get; }
 
-        internal GetController(IGetView view)
+        internal GetController(IGetView view, IModel model)
         {
-            Model = Users.Instance;
+            Model = model;
             View = view;
         }
 
@@ -28,7 +28,7 @@ namespace Controllers.Impl
             UserInfo userInfo = Model.GetUser(phone);
             if(userInfo == null)
             {
-                View.PhoneText = "Not found";
+                View.SetPhoneText("Not found");
             }
             return userInfo;
         }

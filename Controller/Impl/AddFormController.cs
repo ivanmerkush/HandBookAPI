@@ -10,23 +10,22 @@ namespace Controllers.Impl
 
         public ISideView SideView { get; }
 
-        internal AddFormController(ISideView sideView)
+        internal AddFormController(ISideView sideView, IModel model)
         {
-            Model = Users.Instance;
+            Model = model;
             SideView = sideView;
-            SideView.ButtonText = "Add";
         }
 
         public void ExecuteOperation(UserInfo user)
         {
             if (Model.Exists(user.Phone))
             {
-                SideView.NotifierText = ">This user already exists";
+                SideView.AppendNotifierText(">This user already exists");
             }
             else
             {
                 Model.Add(user);
-                SideView.NotifierText = ">New user was added";
+                SideView.AppendNotifierText(">New user was added");
             }
         }
     }

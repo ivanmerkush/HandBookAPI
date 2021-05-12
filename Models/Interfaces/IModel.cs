@@ -4,7 +4,6 @@ namespace Models
 {
     public interface IModel
     {
-        public static IModel Instance { get; }
         IReadOnlyCollection<UserInfo> GetAll();
         IReadOnlyCollection<UserInfo> GetUser(string name, string surname);
         UserInfo GetUser(string phone);

@@ -31,8 +31,8 @@ namespace WindowsFormsApp
         private void InitializeComponent()
         {
             this.notifierBox = new System.Windows.Forms.GroupBox();
-            this.userGroubBox = new System.Windows.Forms.GroupBox();
             this.userList = new System.Windows.Forms.ListBox();
+            this.userGroubBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.loadButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
@@ -43,7 +43,6 @@ namespace WindowsFormsApp
             this.addButton = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
-            this.notifierBox.SuspendLayout();
             this.userGroubBox.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -54,7 +53,6 @@ namespace WindowsFormsApp
             // notifierBox
             // 
             this.notifierBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.notifierBox.Controls.Add(this.textBox);
             this.notifierBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.notifierBox.Location = new System.Drawing.Point(525, 0);
             this.notifierBox.Name = "notifierBox";
@@ -62,32 +60,6 @@ namespace WindowsFormsApp
             this.notifierBox.TabIndex = 6;
             this.notifierBox.TabStop = false;
             this.notifierBox.Text = "Notifier";
-            // 
-            // textBox
-            // 
-            this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox.Location = new System.Drawing.Point(19, 22);
-            this.textBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox.Multiline = true;
-            this.textBox.Name = "textBox";
-            this.textBox.ReadOnly = true;
-            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(217, 529);
-            this.textBox.TabIndex = 1;
-            // 
-            // userGroubBox
-            // 
-            this.userGroubBox.Controls.Add(this.userList);
-            this.userGroubBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userGroubBox.Location = new System.Drawing.Point(211, 0);
-            this.userGroubBox.Name = "userGroubBox";
-            this.userGroubBox.Size = new System.Drawing.Size(314, 556);
-            this.userGroubBox.TabIndex = 7;
-            this.userGroubBox.TabStop = false;
-            this.userGroubBox.Text = "Users";
             // 
             // userList
             // 
@@ -103,6 +75,17 @@ namespace WindowsFormsApp
             this.userList.Size = new System.Drawing.Size(300, 529);
             this.userList.TabIndex = 5;
             this.userList.SelectedIndexChanged += new System.EventHandler(this.UserList_SelectedIndexChanged);
+            // 
+            // userGroubBox
+            // 
+            this.userGroubBox.Controls.Add(this.userList);
+            this.userGroubBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userGroubBox.Location = new System.Drawing.Point(211, 0);
+            this.userGroubBox.Name = "userGroubBox";
+            this.userGroubBox.Size = new System.Drawing.Size(314, 556);
+            this.userGroubBox.TabIndex = 7;
+            this.userGroubBox.TabStop = false;
+            this.userGroubBox.Text = "Users";
             // 
             // tableLayoutPanel1
             // 
@@ -251,8 +234,6 @@ namespace WindowsFormsApp
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "UserForm";
             this.Text = "Handbook";
-            this.notifierBox.ResumeLayout(false);
-            this.notifierBox.PerformLayout();
             this.userGroubBox.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

@@ -10,16 +10,9 @@ namespace Models
     /// </summary>
     public class Users : IModel
     {
-        private static Users instance;
-
         private readonly List<UserInfo> userList;
 
-        public static IModel Instance
-        {
-            get => instance ??= new Users();
-        }
-
-        private Users()
+        public Users()
         {
             userList = new List<UserInfo>();
         }
@@ -108,7 +101,7 @@ namespace Models
         {
             try
             {
-                UserInfo.id = 1;
+                UserInfo.idCounter = 1;
                 userList.Clear();
                 string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, @"Files\Users.json");
                 string jsonString = File.ReadAllText(path);

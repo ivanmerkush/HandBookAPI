@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using System.Collections.Generic;
+using Models;
 using InterfacesLibrary.Interfaces.Controllers;
 
 namespace InterfacesLibrary.Interfaces.Views
@@ -9,11 +10,12 @@ namespace InterfacesLibrary.Interfaces.Views
     public interface IUserView
     {
         IController Controller { get; }
-        string MessageBoxText { set; }
-        string NotifierText { set; }
-        bool EditingVisible { get; set; }
 
-        void GetUsers();
+        void EnableEdittingUsers();
+        void DisableEdittingUsers();
+        void ShowMessageBox(string text);
+        void AppendNotifierText(string text);
+        IReadOnlyCollection<UserInfo> GetUsers();
         void GetUser();
         void AddUser();
         void EditUser();

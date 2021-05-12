@@ -8,7 +8,7 @@ namespace Models
     /// </summary>
     public class UserInfo
     {
-        internal static int id = 1;
+        internal static int idCounter = 1;
 
         [JsonPropertyName("Id")]
         public int Id { get; set; }
@@ -21,17 +21,30 @@ namespace Models
 
         internal UserInfo()
         {
-            id++;
+            idCounter++;
         }
 
+        /// <summary>
+        /// Creates userInfo with a new Id
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="phone"></param>
         public UserInfo(string name, string surname, string phone)
         {
-            Id = id++;
+            Id = idCounter++;
             Name = name;
             Surname = surname;
             Phone = phone;
         }
 
+        /// <summary>
+        /// Creates userInfo with an old Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="phone"></param>
         public UserInfo(int id, string name, string surname, string phone)
         {
             Id = id;

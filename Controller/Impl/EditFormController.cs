@@ -10,24 +10,23 @@ namespace Controllers.Impl
         public IModel Model { get; }
         public ISideView SideView { get; }
 
-        internal EditFormController(ISideView sideView)
+        internal EditFormController(ISideView sideView, IModel model)
         {
-            Model = Users.Instance;
+            Model = model;
             SideView = sideView;
-            SideView.ButtonText = "Edit";
         }
 
         public void ExecuteOperation(UserInfo editedUser)
         {
             if (Model.Exists(editedUser.Name, editedUser.Surname, editedUser.Phone))
             {
-                SideView.MessageBoxText = "Not unique attributes";
+                SideView.ShowMessageBox("Not unique attributes");
             }
             else
             {
-                SideView.NotifierText = ">User was edited.";
+                SideView.AppendNotifierText(">User was edited.");
                 Model.Edit(editedUser);
-                SideView.EditingVisible = false;
+                SideView.DisableEdittingUsers();
             }
         }
     }

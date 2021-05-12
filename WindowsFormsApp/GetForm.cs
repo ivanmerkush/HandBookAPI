@@ -15,7 +15,6 @@ namespace WindowsFormsApp
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
         public IInfoController InfoController { get; }
-        public string PhoneText { set => userBox.Text = value; }
 
         public GetForm()
         {
@@ -49,6 +48,8 @@ namespace WindowsFormsApp
 
             }
         }
+
+        public void SetPhoneText(string text) => userBox.Text = text;
 
         private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
         {

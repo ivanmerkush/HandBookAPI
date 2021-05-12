@@ -6,76 +6,56 @@ using Models;
 using InterfacesLibrary.Interfaces.Controllers;
 using InterfacesLibrary.Interfaces.Views;
 using Controllers;
-using WindowsFormsApp.Enums;
 
 namespace WindowsFormsApp
 {
-    internal partial class SideForm : Form, ISideView
+    public partial class SideForm : Form, ISideView
     {
-        private readonly IUserView mainView;
-        private readonly UserInfo oldUser;
+        private IUserView mainView;
+        public ISideController SideController { get; internal set; }
+        protected readonly UserInfo oldUser;
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
-        public string ButtonText { set => executeButton.Text = value; }
-        public ISideController SideController { get; }
-        public string MessageBoxText 
-        { 
-            set => mainView.MessageBoxText = value;
-        }
-        public string NotifierText { set => mainView.NotifierText = value; }
-        public bool EditingVisible 
-        { 
-            get => mainView.EditingVisible; 
-            set => mainView.EditingVisible = value; 
-        }
-
-        private SideForm()
+        protected SideForm()
         {
             InitializeComponent();
         }
 
-        public SideForm(IUserView view, Operations operation)
+        protected SideForm(IUserView view)
         {
-            InitializeComponent();
-            phoneBox.Validating += PhoneValidating;
-            nameBox.Validating += NameValidating;
-            surnameBox.Validating += SurnameValidating;
-            mainView = view;
-            if (operation == Operations.ADD)
-            {
-                SideController = Helper.GetAddFormController(this);
-            }
-            else
-            {
-                if(operation == Operations.EDIT)
-                {
-                    SideController = Helper.GetEditFormController(this);
-                }
-            }
+            InitializeSideForm(view);
         }
 
-        public SideForm(IUserView view, UserInfo userInfo, Operations operation)
+        protected SideForm(IUserView view, UserInfo userInfo)
         {
-            InitializeComponent();
+            InitializeSideForm(view);
             oldUser = userInfo;
             nameBox.Text = userInfo.Name;
             surnameBox.Text = userInfo.Surname;
             phoneBox.Text = userInfo.Phone;
+        }
+
+        private void InitializeSideForm(IUserView view)
+        {
+            InitializeComponent();
             phoneBox.Validating += PhoneValidating;
             nameBox.Validating += NameValidating;
             surnameBox.Validating += SurnameValidating;
             mainView = view;
-            if (operation == Operations.ADD)
-            {
-                SideController = Helper.GetAddFormController(this);
-                executeButton.Text = "Add";
-            }
-            else
-            {
-                SideController = Helper.GetEditFormController(this);
-                executeButton.Text = "Edit";
-            }
         }
+
+        public void EnableEdittingUsers()
+        {
+            mainView.EnableEdittingUsers();
+        }
+
+        public void DisableEdittingUsers()
+        {
+            mainView.DisableEdittingUsers();
+        }
+
+        public void ShowMessageBox(string text) => mainView.ShowMessageBox(text);
+        public void AppendNotifierText(string text) => mainView.AppendNotifierText(text);
 
         private void EditButton_Click(object sender, EventArgs e)
         {
@@ -155,16 +135,9 @@ namespace WindowsFormsApp
             }
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
-            if (oldUser != null)
-            {
-                SideController.ExecuteOperation(new UserInfo(oldUser.Id, nameBox.Text, surnameBox.Text, phoneBox.Text));
-            }
-            else
-            {
-                SideController.ExecuteOperation(new UserInfo(nameBox.Text, surnameBox.Text, phoneBox.Text));
-            }
+            
         }
     }
 }

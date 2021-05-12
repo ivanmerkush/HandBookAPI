@@ -11,9 +11,9 @@ namespace Controllers
         public IModel Model { get; }
         public IUserView View { get; }
 
-        internal ConsoleController(IUserView view)
+        internal ConsoleController(IUserView view, IModel model)
         {
-            Model = Users.Instance;
+            Model = model;
             View = view;
         }
 
@@ -21,12 +21,12 @@ namespace Controllers
         {
             if (Model.Exists(user.Phone))
             {
-                View.NotifierText = "This user already exists";
+                View.AppendNotifierText("This user already exists");
             }
             else
             {
                 Model.Add(user);
-                View.NotifierText = "New user was added";
+                View.AppendNotifierText("New user was added");
             }
         }
 
@@ -37,17 +37,17 @@ namespace Controllers
                 if (Model.Exists(userInfo.Name, userInfo.Surname))
                 {
                     Model.Delete(userInfo.Name, userInfo.Surname);
-                    View.NotifierText = "User was deleted.";
-                    View.EditingVisible = false;
+                    View.AppendNotifierText("User was deleted.");
+                    View.DisableEdittingUsers();
                 }
                 else
                 {
-                    View.NotifierText = "This user doesn't exist.";
+                    View.AppendNotifierText("This user doesn't exist.");
                 }
             }
             catch(ArgumentNullException)
             {
-                View.MessageBoxText = "User is null";
+                View.ShowMessageBox("User is null");
             }
             
         }
@@ -56,13 +56,13 @@ namespace Controllers
         {
             if (Model.Exists(editedUser.Name, editedUser.Surname, editedUser.Phone))
             {
-                View.NotifierText= "Not unique attributes";
+                View.AppendNotifierText("Not unique attributes");
             }
             else
             {
-                View.NotifierText = "User was edited.";
+                View.AppendNotifierText("User was edited.");
                 Model.Edit(editedUser);
-                View.EditingVisible = false;
+                View.DisableEdittingUsers();
             }
         }
 
@@ -71,7 +71,7 @@ namespace Controllers
             IReadOnlyCollection<UserInfo> users = Model.GetUser(name, surname);
             if(users.Count == 0)
             {
-                View.NotifierText = "Doesn't exist";
+                View.AppendNotifierText("Doesn't exist");
             }
             return users;
         }
@@ -81,14 +81,14 @@ namespace Controllers
             UserInfo userInfo = Model.GetUser(phone);
             if (userInfo == null)
             {
-                View.NotifierText = "Not found";
+                View.AppendNotifierText("Not found");
             }
             return userInfo;
         }
 
         public IReadOnlyCollection<UserInfo> GetUsers()
         {
-            View.NotifierText = "All users:";
+            View.AppendNotifierText("All users:");
             return Model.GetAll();
         }
 
@@ -96,12 +96,12 @@ namespace Controllers
         {
             if (Model.TryLoad())
             {
-                View.NotifierText = "Users were successfully loaded from file.";
-                View.EditingVisible = false;
+                View.AppendNotifierText("Users were successfully loaded from file.");
+                View.DisableEdittingUsers();
             }
             else
             {
-                View.NotifierText = "Problem happened during loading users";
+                View.AppendNotifierText("Problem happened during loading users");
             }
         }
 
@@ -109,11 +109,11 @@ namespace Controllers
         {
             if (Model.TrySave())
             {
-                View.NotifierText = "Users were successfully saved to file.";
+                View.AppendNotifierText("Users were successfully saved to file.");
             }
             else
             {
-                View.NotifierText = "Problem happened during saving users";
+                View.AppendNotifierText("Problem happened during saving users");
             }
         }
     }

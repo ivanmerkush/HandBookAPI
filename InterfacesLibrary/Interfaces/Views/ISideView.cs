@@ -4,11 +4,12 @@ namespace InterfacesLibrary.Interfaces.Views
 {
     public interface ISideView
     {
-        string MessageBoxText { set; }
-        string NotifierText { set; }
-        bool EditingVisible { get; set; }
-        string ButtonText { set; }
         ISideController SideController { get; }
+
+        void ShowMessageBox(string text);
+        void AppendNotifierText(string text);
+        void EnableEdittingUsers();
+        void DisableEdittingUsers();
         void Execute();
     }
 }

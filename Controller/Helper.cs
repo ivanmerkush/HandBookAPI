@@ -6,10 +6,16 @@ namespace Controllers
 {
     public static class Helper
     {
-        public static IController GetMainFormController(IUserView view) => new MainFormController(view);
-        public static IController GetConsoleController(IUserView view) => new ConsoleController(view);
-        public static ISideController GetAddFormController(ISideView sideView) => new AddFormController(sideView);
-        public static ISideController GetEditFormController(ISideView sideView) => new EditFormController(sideView);
-        public static IInfoController GetInfoController(IGetView getView) => new GetController(getView);
+        private static IModel model;
+
+        public static IModel Users
+        {
+            get => model ??= new Users();
+        }
+        public static IController GetMainFormController(IUserView view) => new MainFormController(view, Users);
+        public static IController GetConsoleController(IUserView view) => new ConsoleController(view, Users);
+        public static ISideController GetAddFormController(ISideView sideView) => new AddFormController(sideView, Users);
+        public static ISideController GetEditFormController(ISideView sideView) => new EditFormController(sideView, Users);
+        public static IInfoController GetInfoController(IGetView getView) => new GetController(getView, Users);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Models;
 using InterfacesLibrary.Interfaces.Controllers;
@@ -8,41 +9,9 @@ using Controllers;
 
 namespace WindowsFormsApp
 {
-    using Enums;
     public partial class UserForm : Form, IUserView
     {
-        private bool isEditingVisible;
-
         public IController Controller { get; }
-        public string MessageBoxText
-        {
-            set
-            {
-                MessageBox.Show(value,
-                "Message",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1,
-                MessageBoxOptions.DefaultDesktopOnly);
-            }
-        }
-        public string NotifierText
-        {
-            set
-            {
-                textBox.AppendText(value + Environment.NewLine);
-            }
-        }
-        public bool EditingVisible 
-        {
-            get => isEditingVisible; 
-            set
-            {
-                isEditingVisible = value;
-                editButton.Enabled = isEditingVisible;
-                deleteButton.Enabled = isEditingVisible;
-            }
-        }
 
         public UserForm()
         {
@@ -50,25 +19,37 @@ namespace WindowsFormsApp
             InitializeComponent();
         }
 
+        public void EnableEdittingUsers()
+        {
+            editButton.Enabled = true;
+            deleteButton.Enabled = true;
+        }
+
+        public void DisableEdittingUsers()
+        {
+            editButton.Enabled = false;
+            deleteButton.Enabled = false;
+        }
+
         public void AddUser()
         {
-            Form addForm = new SideForm(this, Operations.ADD);
+            SideForm addForm = new AddForm(this);
             addForm.ShowDialog();
-            GetUsers();
+            UpdateUsersBox();
         }
 
         public void DeleteUser()
         {
             UserInfo user = (UserInfo) userList.SelectedItem;
             Controller.DeleteUser(user);
-            GetUsers();
+            UpdateUsersBox();
         }
 
         public void EditUser()
         {
-            Form editForm = new SideForm(this, (UserInfo)userList.SelectedItem, Operations.EDIT);
+            SideForm editForm = new EditForm(this, (UserInfo)userList.SelectedItem);
             editForm.ShowDialog();
-            GetUsers();
+            UpdateUsersBox();
         }
 
         public void GetUser()
@@ -77,22 +58,33 @@ namespace WindowsFormsApp
             getForm.ShowDialog();
         }
 
-        public void GetUsers()
+        public IReadOnlyCollection<UserInfo> GetUsers() => Controller.GetUsers();
+
+        private void UpdateUsersBox()
         {
             userList.Items.Clear();
-            userList.Items.AddRange(Controller.GetUsers().ToArray());
+            userList.Items.AddRange(GetUsers().ToArray());
         }
 
         public void LoadDB()
         {
             Controller.LoadDB();
-            GetUsers();
+            UpdateUsersBox();
         }
 
         public void SaveDB()
         {
             Controller.SaveDB();
         }
+
+        public void ShowMessageBox(string text) => MessageBox.Show(text,
+                                                   "Message",
+                                                   MessageBoxButtons.OK,
+                                                   MessageBoxIcon.Information,
+                                                   MessageBoxDefaultButton.Button1,
+                                                   MessageBoxOptions.DefaultDesktopOnly);
+
+        public void AppendNotifierText(string text) => textBox.AppendText(text + Environment.NewLine);
 
         private void GetButton_Click(object sender, EventArgs e)
         {
@@ -126,7 +118,12 @@ namespace WindowsFormsApp
 
         private void UserList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EditingVisible = true;
+            EnableEdittingUsers();
+        }
+
+        private void userGridView_SelectionChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

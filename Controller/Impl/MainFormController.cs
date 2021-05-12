@@ -14,9 +14,9 @@ namespace Controllers.Impl
         public IModel Model { get; }
         public IUserView View { get; }
 
-        internal MainFormController(IUserView view)
+        internal MainFormController(IUserView view, IModel model)
         {
-            Model = Users.Instance;
+            Model = model;
             View = view;
         }
 
@@ -47,12 +47,12 @@ namespace Controllers.Impl
         {
             if (Model.Exists(user.Phone))
             {
-                View.MessageBoxText = "This user already exists";
+                View.ShowMessageBox("This user already exists");
             }
             else
             {
                 Model.Add(user);
-                View.NotifierText = ">New user was added";
+                View.AppendNotifierText(">New user was added");
             }
         }
 
@@ -60,19 +60,19 @@ namespace Controllers.Impl
         {
             if (editedUser == null)
             {
-                View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
+                View.ShowMessageBox("Somehow you clicked this button without selecting user, I wont let you pass.");
             } 
             else
             {
                 if (Model.Exists(editedUser.Name, editedUser.Surname, editedUser.Phone))
                 {
-                    View.MessageBoxText = "Not unique attributes";
+                    View.ShowMessageBox("Not unique attributes");
                 }
                 else
                 {
-                    View.NotifierText = ">User was edited.";
+                    View.AppendNotifierText(">User was edited.");
                     Model.Edit(editedUser);
-                    View.EditingVisible = false;
+                    View.DisableEdittingUsers();
                 }
             }
         }
@@ -81,33 +81,33 @@ namespace Controllers.Impl
         {
             if (userInfo == null)
             {
-                View.MessageBoxText = "Somehow you clicked this button without selecting user, I wont let you pass.";
+                View.ShowMessageBox("Somehow you clicked this button without selecting user, I wont let you pass.");
             }
             else
             {
                 if (Model.Exists(userInfo.Name, userInfo.Surname))
                 {
                     Model.Delete(userInfo.Name, userInfo.Surname);
-                    View.NotifierText = ">User was deleted.";
-                    View.EditingVisible = false;
+                    View.AppendNotifierText(">User was deleted.");
+                    View.DisableEdittingUsers();
                 }
                 else
                 {
-                    View.MessageBoxText = "Problem occuried during delete.";
+                    View.ShowMessageBox("Problem occuried during delete.");
                 }
             }
         }
-
+        
         public void LoadDB()
         {
             if(Model.TryLoad())
             {
-                View.NotifierText = ">Users were successfully loaded from file.";
-                View.EditingVisible = false;
+                View.AppendNotifierText(">Users were successfully loaded from file.");
+                View.DisableEdittingUsers();
             }
             else
             {
-                View.MessageBoxText = "Problem happened during loading users";
+                View.ShowMessageBox("Problem happened during loading users");
             }
         }
 
@@ -115,11 +115,11 @@ namespace Controllers.Impl
         {
             if(Model.TrySave())
             {
-                View.NotifierText = ">Users were successfully saved to file.";
+                View.AppendNotifierText(">Users were successfully saved to file.");
             }
             else
             {
-                View.MessageBoxText = "Problem happened during saving users";
+                View.ShowMessageBox("Problem happened during saving users");
             }
         }
     }

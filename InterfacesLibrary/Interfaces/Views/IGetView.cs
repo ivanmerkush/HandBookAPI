@@ -8,6 +8,7 @@ namespace InterfacesLibrary.Interfaces.Views
     public interface IGetView
     {
         IInfoController InfoController { get; }
-        string PhoneText { set; }
+
+        void SetPhoneText(string text);
     }
 }

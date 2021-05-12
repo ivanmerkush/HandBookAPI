@@ -11,14 +11,6 @@ namespace Views
     sealed public class ConsoleView : IUserView
     {
         public IController Controller { get; }
-        public string MessageBoxText { set => Console.WriteLine(value); }
-        public string NotifierText { set => Console.WriteLine(value); }
-
-        public bool EditingVisible 
-        {
-            get; 
-            set; 
-        }
 
         private readonly string pattern = @"\b^(375)+\d{9}\b";
 
@@ -36,7 +28,7 @@ namespace Views
                 switch (choice)
                 {
                     case 1:
-                        GetUsers();
+                        PrintUsers();
                         break;
                     case 2:
                         GetUser();
@@ -186,14 +178,10 @@ namespace Views
                 
         }
 
-        public void GetUsers()
-        {
-            IReadOnlyCollection<UserInfo> list = Controller.GetUsers();
-            foreach(UserInfo user in list)
-            {
-                Console.WriteLine(user);
-            }
-        }
+        public void ShowMessageBox(string text) => Console.WriteLine(text);
+        public void AppendNotifierText(string text) => Console.WriteLine(text);
+
+        public IReadOnlyCollection<UserInfo> GetUsers() => Controller.GetUsers();
 
         public void LoadDB()
         {
@@ -219,5 +207,22 @@ namespace Views
                 "8)Exit;");
         }
 
+        private void PrintUsers()
+        {
+            foreach (UserInfo user in GetUsers())
+            {
+                Console.WriteLine(user);
+            }
+        }
+
+        public void EnableEdittingUsers()
+        {
+            
+        }
+
+        public void DisableEdittingUsers()
+        {
+            
+        }
     }
 }

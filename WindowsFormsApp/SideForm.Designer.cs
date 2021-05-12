@@ -104,6 +104,7 @@ namespace WindowsFormsApp
             // 
             // executeButton
             // 
+            this.executeButton.Enabled = false;
             this.executeButton.Location = new System.Drawing.Point(354, 46);
             this.executeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.executeButton.Name = "executeButton";
@@ -129,7 +130,7 @@ namespace WindowsFormsApp
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
             // 
-            // EditForm
+            // SideForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -144,8 +145,8 @@ namespace WindowsFormsApp
             this.Controls.Add(this.surnameBox);
             this.Controls.Add(this.nameBox);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "EditForm";
-            this.Text = "EditForm";
+            this.Name = "SideForm";
+            this.Text = "SideForm";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -153,15 +154,14 @@ namespace WindowsFormsApp
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox nameBox;
-        private System.Windows.Forms.TextBox surnameBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox phoneBox;
-        private System.Windows.Forms.Button executeButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        protected System.Windows.Forms.Button executeButton;
+        protected System.Windows.Forms.TextBox nameBox;
+        protected System.Windows.Forms.TextBox surnameBox;
+        protected System.Windows.Forms.TextBox phoneBox;
     }
 }
